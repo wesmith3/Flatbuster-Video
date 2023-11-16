@@ -1,29 +1,37 @@
-:root {
-  --bg: #282c34;
-  --header: #fff;
-  --link: #61dafb;
-  --text: hsla(0, 0%, 100%, 0.88);
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black !important;
 }
 
-.retrobutton {
-  width: 100%;
-    color: #fff;
-    text-align: center;
-    /* background-color: #0d5596;
-    border-top: 4px solid #4799e4;
-    border-bottom: 4px solid #00203d;
-    border-left: 3px solid #4799e5;
-    border-right: 3px solid #02203d; */
-    background-color: #657b83; /* Grey background */
-    border-top: 4px solid #a5afb7; /* Light grey */
-    border-bottom: 4px solid #333333; /* Dark grey */
-    border-left: 3px solid #a5afb8; /* Light grey */
-    border-right: 3px solid #333333; 
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 13px;
-    font-family: Verdana, Geneva, sans-serif;
-    font-weight: 700;
-    display: flex;
+.page-header {
+  position: relative; /* Changed to relative */
+  width: 100%; /* Changed to 100% */
+  height: 20vh; /* Changed to viewport height (20%) */
+  text-align: center; /* Center the text */
+}
+
+.menu {
+  position: relative; /* Changed to relative */
+  /* padding: 5px; */
+}
+
+.logo {
+  width: 300px;
+  height: 120px;
+  margin-top: 25px;
+  transform: rotate(-5deg);
+  box-shadow: 0 0 15px #FFCC00;
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.movie-card {
+  position: relative;
 }
