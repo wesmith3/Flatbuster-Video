@@ -5,3 +5,25 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+.retrobutton {
+  width: 100%;
+    color: #fff;
+    text-align: center;
+    /* background-color: #0d5596;
+    border-top: 4px solid #4799e4;
+    border-bottom: 4px solid #00203d;
+    border-left: 3px solid #4799e5;
+    border-right: 3px solid #02203d; */
+    background-color: #657b83; /* Grey background */
+    border-top: 4px solid #a5afb7; /* Light grey */
+    border-bottom: 4px solid #333333; /* Dark grey */
+    border-left: 3px solid #a5afb8; /* Light grey */
+    border-right: 3px solid #333333; 
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 13px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: 700;
+    display: flex;
+}
