@@ -1,10 +1,10 @@
 import React from 'react'
-import { Grid, GridRow, Segment } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import MovieCard from './MovieCard'
 
 function MovieCollection() {
   return (
-    <Grid columns='equal'>
+    <Grid centered columns={4}>
       <Grid.Row >
         <Grid.Column>
             <MovieCard />

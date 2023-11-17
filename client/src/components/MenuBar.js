@@ -3,7 +3,7 @@ import { Menu, Button } from 'semantic-ui-react'
 
 function MenuBar() {
   return (
-    <Menu className="menu-bar" size='tiny'>
+    <Menu className="menu-bar" size='large'>
         <Menu.Item
           name='home'
         />
