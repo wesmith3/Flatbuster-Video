@@ -1,9 +1,9 @@
 import React from 'react'
-import { Menu, Dropdown, Button } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 
 function MenuBar() {
   return (
-    <Menu size='tiny'>
+    <Menu className="menu-bar" size='tiny'>
         <Menu.Item
           name='home'
         />
@@ -14,19 +14,17 @@ function MenuBar() {
           name='Browse Movies'
         />
         <Menu.Item
+          name='Browse TV Shows'
+        />
+        <Menu.Item
           name='browse games'
         />
         <Menu.Menu position='right'>
-          <Dropdown item text='Language'>
-            <Dropdown.Menu>
-              <Dropdown.Item>English</Dropdown.Item>
-              <Dropdown.Item>Russian</Dropdown.Item>
-              <Dropdown.Item>Spanish</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
           <Menu.Item>
-            <Button primary>Sign Up</Button>
+            <Button primary>Login</Button>
+          </Menu.Item>
+          <Menu.Item>
+            <Button secondary>Sign Up</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

@@ -20,9 +20,9 @@ function Footer() {
                 <Grid.Column width={2}>
                 <Header inverted as='h4' content='Contributors' />
                 <List link inverted>
-                    <List.Item as='a'>Alberto Sierra</List.Item>
-                    <List.Item as='a'>Brian Richie</List.Item>
-                    <List.Item as='a'>Wesley Smith</List.Item>
+                    <List.Item as='a' href='https://github.com/SIERRAT0NIN'>Alberto Sierra</List.Item>
+                    <List.Item as='a' href='https://github.com/brianrichiesr'>Brian Richie</List.Item>
+                    <List.Item as='a' href='https://github.com/wesmith3'>Wesley Smith</List.Item>
                 </List>
                 </Grid.Column>
                 <Grid.Column width={8}>
