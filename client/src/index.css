@@ -18,6 +18,7 @@ body {
   position: relative;
   width: 95%;
   left: 2.5%;
+
 }
 
 .shopping-cart {
@@ -34,11 +35,16 @@ body {
   margin-top: 2em;
   margin-left: 5em;
   transform: rotate(-5deg);
-  box-shadow: 0 0 15px #FFCC00;
+  box-shadow: 0 0 15px #ffa903;
 }
-
 
 .footer {
   text-align: center;
   padding-top: 5vh;
+}
+
+.welcome-image {
+  width: 97.5%;
+  height: 50%;
+  padding-left: 2.5%;
 }

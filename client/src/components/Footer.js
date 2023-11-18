@@ -14,7 +14,7 @@ function Footer() {
                     <List.Item as='a'>Sitemap</List.Item>
                     <List.Item as='a'>Contact Us</List.Item>
                     <List.Item as='a'>FAQ's</List.Item>
-                    <List.Item as='a'></List.Item>
+                    <List.Item as='a' href='http://localhost:3000/'>Back to the Top</List.Item>
                 </List>
                 </Grid.Column>
                 <Grid.Column width={2}>

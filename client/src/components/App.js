@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import MenuBar from "./MenuBar";
 import MovieCollection from './MovieCollection'
+import Welcome from "./Welcome";
 
 function App() {
 
@@ -12,7 +13,8 @@ function App() {
   <div>
     <Header />
     <MenuBar />
-    <MovieCollection />
+    <Welcome />
+    {/* <MovieCollection /> */}
     <Footer />
   </div>
   )

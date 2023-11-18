@@ -5,7 +5,7 @@ function Header() {
   return (
     <div className='page-header'>
       <img className="logo" src="././Logo.png" alt="Logo"></img>
-      <Button className='shopping-cart' icon='cart' color='yellow' size='large'></Button>
+      <Button className='shopping-cart' icon='cart' color='yellow' size='huge'></Button>
     </div>
   )
 }
