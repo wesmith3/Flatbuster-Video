@@ -1,13 +1,9 @@
-from app_setup import (
+from config import (
     SerializerMixin, 
     metadata, 
     association_proxy, 
     validates,
     db)
-
-
-
-
 
 class Rental(db.Model, SerializerMixin):
     __tablename__="rentals"
@@ -18,5 +14,15 @@ class Rental(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
     
+    #Relationships
+    user = db.relationship('User', back_populates='rentals')
+    movie = db.relationship('Movie', back_populates='rentals')
+    
+    #Serialization
+    
+    
+    #Validations
+    
+    
     def __repr__(self):
-        return f"<User {self.id} {self.rental_date} {self.return_date} >"
+        return f"<Rental Id:{self.id}, Rental Date:{self.rental_date}, Return Date:{self.return_date} >"

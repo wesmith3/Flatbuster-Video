@@ -1,4 +1,4 @@
-from app_setup import (
+from config import (
     SerializerMixin, 
     metadata, 
     association_proxy, 
