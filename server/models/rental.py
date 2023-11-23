@@ -5,10 +5,6 @@ from app_setup import (
     validates,
     db)
 
-
-
-
-
 class Rental(db.Model, SerializerMixin):
     __tablename__="rentals"
     
@@ -19,4 +15,4 @@ class Rental(db.Model, SerializerMixin):
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
     
     def __repr__(self):
-        return f"<User {self.id} {self.rental_date} {self.return_date} >"
+        return f"<Rental {self.id} {self.rental_date} {self.return_date} >"
