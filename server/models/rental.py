@@ -1,4 +1,4 @@
-from app_setup import (
+from config import (
     SerializerMixin, 
     metadata, 
     association_proxy, 
@@ -25,4 +25,4 @@ class Rental(db.Model, SerializerMixin):
     
     
     def __repr__(self):
-        return f"<Rental {self.id} {self.rental_date} {self.return_date} >"
+        return f"<Rental Id:{self.id}, Rental Date:{self.rental_date}, Return Date:{self.return_date} >"

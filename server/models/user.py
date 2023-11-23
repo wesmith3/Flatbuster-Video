@@ -1,4 +1,4 @@
-from app_setup import (
+from config import (
     SerializerMixin, 
     metadata, 
     association_proxy, 
@@ -9,17 +9,17 @@ class User(db.Model, SerializerMixin):
     __tablename__='users'
     
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
     phone_number = db.Column(db.Integer, nullable=False)
     address = db.Column(db.String, nullable=False)
     is_employee = db.Column(db.Boolean, nullable=False)
     
     #Relationships
     rentals = db.relationship(
-        'Rentals', 
+        'Rental', 
         back_populates='user', 
         cascade='all, delete-orphan'
         )
@@ -32,4 +32,4 @@ class User(db.Model, SerializerMixin):
     
     
     def __repr__(self):
-        return f"<User {self.id}, {self.first_name} {self.last_name} Is Employed:{self.is_employee}>"
+        return f"<User Id:{self.id}, Name:{self.first_name} {self.last_name}, Is Employed:{self.is_employee}>"

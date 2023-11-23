@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 # Standard library imports
-
+from models.user import User
+from models.movie import Movie
+from models.rental import Rental
 # Remote library imports
-from flask import request
+from flask import request, Flask
 from flask_restful import Resource
 
 # Local imports
