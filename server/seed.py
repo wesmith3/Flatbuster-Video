@@ -35,12 +35,12 @@ def create_users():
 def create_movies():
     movies = []
     for _ in range(10):
-        c = Movie(
+        m = Movie(
             genre=fake.word(),
             release_year=fake.year(),
             stock=rc(range(0, 4)),
         )
-        movies.append(c)
+        movies.append(m)
 
     return movies
 
@@ -48,13 +48,13 @@ def create_movies():
 def create_rentals(users, movies):
     rentals = []
     for _ in range(20):
-        s = Rental(
+        r = Rental(
             rental_date=fake.date_time(),
             return_date=fake.future_date(),
             user_id=rc([user.id for user in users]),
             movie_id=rc([movie.id for movie in movies])
         )
-        rentals.append(s)
+        rentals.append(r)
 
     return rentals
 

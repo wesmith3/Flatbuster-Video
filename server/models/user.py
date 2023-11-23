@@ -17,5 +17,19 @@ class User(db.Model, SerializerMixin):
     address = db.Column(db.String, nullable=False)
     is_employee = db.Column(db.Boolean, nullable=False)
     
+    #Relationships
+    rentals = db.relationship(
+        'Rentals', 
+        back_populates='user', 
+        cascade='all, delete-orphan'
+        )
+    movies = association_proxy('rentals', 'movie')
+    
+    #Serialization
+    
+    
+    #Validations
+    
+    
     def __repr__(self):
         return f"<User {self.id}, {self.first_name} {self.last_name} Is Employed:{self.is_employee}>"
