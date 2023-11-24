@@ -19,7 +19,7 @@ class Rental(db.Model, SerializerMixin):
     movie = db.relationship('Movie', back_populates='rentals')
     
     #Serialization
-    
+    serialize_rules = ('-user.rentals', '-movie.rentals')
     
     #Validations
     

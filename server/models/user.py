@@ -26,7 +26,7 @@ class User(db.Model, SerializerMixin):
     movies = association_proxy('rentals', 'movie')
     
     #Serialization
-    
+    serialize_rules = ('-rentals.user', '-movies.users')
     
     #Validations
     
