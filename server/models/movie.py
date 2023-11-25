@@ -5,6 +5,7 @@ from config import (
     validates,
     db)
 
+
 class Movie(db.Model, SerializerMixin):
     __tablename__='movies'
     
@@ -21,7 +22,7 @@ class Movie(db.Model, SerializerMixin):
     users = association_proxy('rentals', 'user')
     
     #Serialization
-    
+    serialize_rules = ('-rentals.movie', '-users.movies')
     
     #Validations
     
