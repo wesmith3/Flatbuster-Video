@@ -16,7 +16,7 @@ class Complaint(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='complaints')
     
     #Serialization
-    serialize_rules = ('-user.complaints')
+    serialize_rules = ('-user.complaints',)
 
     def __repr__(self):
         return f"<Complaint Id:{self.id}, Comment:{self.description}>"

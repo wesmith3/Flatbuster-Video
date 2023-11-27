@@ -22,7 +22,17 @@ from config import app, db, api
 
 @app.route('/')
 def index():
-    return '<h1>Project Server</h1>'
+    return '<h1>Flatbuster Video Server</h1>'
+
+class Users(Resource):
+    def get(self):
+        u_list = []
+        users = User.query
+        for user in users:
+            u_list.append(user.to_dict())
+        return u_list, 200
+    
+api.add_resource(Users, '/users')
 
 
 if __name__ == '__main__':
