@@ -8,6 +8,7 @@ from models.rental import Rental
 from models.review import Review
 from models.complaint import Complaint
 from models.stockrequest import StockRequest
+from models.cartmovie import CartMovie
 # Remote library imports
 from flask import request, Flask
 from flask_restful import Resource

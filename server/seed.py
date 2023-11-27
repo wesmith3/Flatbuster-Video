@@ -16,6 +16,7 @@ from models.review import Review
 from models.complaint import Complaint
 from models.cart import Cart
 from models.stockrequest import StockRequest
+from models.cartmovie import CartMovie
 
 
 fake = Faker()
@@ -114,6 +115,17 @@ def create_stock_request(users, movies):
 
     return stock_request
 
+def create_movie_cart(carts, movies):
+    movie_cart = []
+    
+    for _ in range(25):
+        mc = CartMovie(
+            cart_id=rc([cart.id for cart in carts]),
+            movie_id=rc([movie.id for movie in movies]),
+        )
+        movie_cart.append(mc)
+
+    return movie_cart
 
 if __name__ == '__main__':
 
@@ -126,6 +138,7 @@ if __name__ == '__main__':
         Complaint.query.delete()
         Cart.query.delete()
         StockRequest.query.delete()
+        CartMovie.query.delete()
         
         print("Creating tables...")
         db.create_all()
@@ -163,6 +176,11 @@ if __name__ == '__main__':
         print("Seeding stock request...")
         stock_requests = create_stock_request(users, movies)
         db.session.add_all(stock_requests)
+        db.session.commit()
+        
+        print("Seeding cart movies...")
+        cart_movies = create_movie_cart(carts, movies)
+        db.session.add_all(cart_movies)
         db.session.commit()
 
         print("Seeding complete!!!")
