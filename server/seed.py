@@ -14,6 +14,7 @@ from models.rental import Rental
 from models.movie import Movie
 from models.review import Review
 from models.complaint import Complaint
+from models.cart import Cart
 
 fake = Faker()
 
@@ -85,6 +86,18 @@ def create_complaints(users):
 
     return complaints
 
+def create_carts(users, movies):
+    carts = []
+    
+    for _ in range(25):
+        c = Cart(
+            user_id=rc([user.id for user in users]),
+            movie_id=rc([movie.id for movie in movies]),
+        )
+        carts.append(c)
+
+    return carts
+
 
 if __name__ == '__main__':
 
@@ -95,6 +108,7 @@ if __name__ == '__main__':
         Review.query.delete()
         Rental.query.delete()
         Complaint.query.delete()
+        Cart.query.delete()
         
         print("Creating tables...")
         db.create_all()
@@ -122,6 +136,11 @@ if __name__ == '__main__':
         print("Seeding complaints...")
         complaints = create_complaints(users)
         db.session.add_all(complaints)
+        db.session.commit()
+        
+        print("Seeding carts...")
+        carts = create_carts(users, movies)
+        db.session.add_all(carts)
         db.session.commit()
 
         print("Seeding complete!!!")

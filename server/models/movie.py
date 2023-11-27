@@ -20,9 +20,9 @@ class Movie(db.Model, SerializerMixin):
         'Rental', back_populates='movie', cascade='all, delete-orphan'
         )
     users = association_proxy('rentals', 'user')
-    
+    carts = db.relationship('Cart',back_populates='movies', cascade='all, delete-orphan')
     #Serialization
-    serialize_rules = ('-rentals.movie', '-users.movies')
+    serialize_rules = ('-rentals.movie', '-users.movies', '-carts.movies')
     
     #Validations
     
