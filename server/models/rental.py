@@ -17,9 +17,10 @@ class Rental(db.Model, SerializerMixin):
     #Relationships
     user = db.relationship('User', back_populates='rentals')
     movie = db.relationship('Movie', back_populates='rentals')
+    reviews = db.relationship('Review', back_populates='rental', cascade='all, delete-orphan')
     
     #Serialization
-    serialize_rules = ('-user.rentals', '-movie.rentals')
+    serialize_rules = ('-user.rentals', '-movie.rentals', '-reviews.rental')
     
     #Validations
     

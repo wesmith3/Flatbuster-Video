@@ -24,9 +24,10 @@ class User(db.Model, SerializerMixin):
         cascade='all, delete-orphan'
         )
     movies = association_proxy('rentals', 'movie')
+    complaints = db.relationship('Complaint', back_populates='user', cascade='all, delete-orphan')
     
     #Serialization
-    serialize_rules = ('-rentals.user', '-movies.users')
+    serialize_rules = ('-rentals.user', '-movies.users', '-complaints.user')
     
     #Validations
     

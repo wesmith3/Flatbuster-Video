@@ -12,6 +12,8 @@ from config import app, db
 from models.user import User
 from models.rental import Rental
 from models.movie import Movie
+from models.review import Review
+from models.complaint import Complaint
 
 fake = Faker()
 
@@ -59,6 +61,30 @@ def create_rentals(users, movies):
 
     return rentals
 
+def create_reviews(rentals):
+    reviews = []
+    for _ in range(10):
+        r = Review(
+            comment=fake.sentence(),
+            rating=rc(range(0, 5)),
+            date=fake.future_date(),
+            rental_id=rc([rental.id for rental in rentals])
+        )
+        reviews.append(r)
+
+    return reviews
+
+def create_complaints(users):
+    complaints = []
+    for _ in range(25):
+        c = Complaint(
+            description=fake.sentence(),
+            user_id=rc([user.id for user in users])
+        )
+        complaints.append(c)
+
+    return complaints
+
 
 if __name__ == '__main__':
 
@@ -66,7 +92,9 @@ if __name__ == '__main__':
         print("Clearing db...")
         User.query.delete()
         Movie.query.delete()
+        Review.query.delete()
         Rental.query.delete()
+        Complaint.query.delete()
         
         print("Creating tables...")
         db.create_all()
@@ -84,6 +112,16 @@ if __name__ == '__main__':
         print("Seeding rentals...")
         rentals = create_rentals(users, movies)
         db.session.add_all(rentals)
+        db.session.commit()
+        
+        print("Seeding reviews...")
+        reviews = create_reviews(rentals)
+        db.session.add_all(reviews)
+        db.session.commit()
+        
+        print("Seeding complaints...")
+        complaints = create_complaints(users)
+        db.session.add_all(complaints)
         db.session.commit()
 
         print("Seeding complete!!!")
