@@ -12,10 +12,12 @@ class Cart(db.Model, SerializerMixin):
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
 
 #relationship
+
     user = db.relationship('User', back_populates='cart')
-    movies = db.relationship('Movie',back_populates='carts')
+    cart_movies = db.relationship('CartMovie',back_populates='cart', cascade='all, delete-orphan')
+    movies = association_proxy('cart_movies', 'movie')
 #serialization
-    serialize_rules=('-user.cart','-movies.carts')
+    serialize_rules=('-user.cart','-movies.carts','-cart_movies.cart')
     
     def __repr__(self):
         return f"<Cart {self.id} {self.user_id}>"
