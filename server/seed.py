@@ -17,6 +17,8 @@ from models.complaint import Complaint
 from models.cart import Cart
 from models.stockrequest import StockRequest
 from models.cartmovie import CartMovie
+from data import movies
+
 
 
 fake = Faker()
@@ -39,47 +41,19 @@ def create_users():
 
 
 def create_movies():
-    movies = []
-    m1 = Movie(title='Psycho', genre='Horror', release_year=1960, stock=4)
-    movies.append(m1)
-    m2 = Movie(title='Inception', genre='Action', release_year=2010, stock=9)
-    movies.append(m2)
-    m3 = Movie(title='Pulp Fiction', genre='Thriller', release_year=1994, stock=10)
-    movies.append(m3)
-    m4 = Movie(title='The Godfather', genre='Drama', release_year=1971, stock=6)
-    movies.append(m4)
-    m5 = Movie(title='Shawshank Redemption', genre='Drama', release_year=1994, stock=5)
-    movies.append(m5)
-    m6 = Movie(title='Fantastic Mr. Fox', genre='Comedy', release_year=2009, stock=3)
-    movies.append(m6)
-    m7 = Movie(title='Iron Man', genre='Action', release_year=2008, stock=8)
-    movies.append(m7)
-    m8 = Movie(title='The Hangover', genre='Comedy', release_year=2009, stock=6)
-    movies.append(m8)
-    m9 = Movie(title='The Notebook', genre='Romance', release_year=2004, stock=4)
-    movies.append(m9)
-    m10 = Movie(title='Frozen', genre='Animation', release_year=2013, stock=7)
-    movies.append(m10)
-    m11 = Movie(title='The Matrix', genre='Sci-Fi', release_year=1999, stock=5)
-    movies.append(m11)
-    m12 = Movie(title='Forrest Gump', genre='Drama', release_year=1994, stock=8)
-    movies.append(m12)
-    m13 = Movie(title='The Dark Knight', genre='Action', release_year=2008, stock=10)
-    movies.append(m13)
-    m14 = Movie(title='Titanic', genre='Romance', release_year=1997, stock=7)
-    movies.append(m14)
-    m15 = Movie(title='Avatar', genre='Sci-Fi', release_year=2009, stock=9)
-    movies.append(m15)
-    m16 = Movie(title='Jurassic Park', genre='Adventure', release_year=1993, stock=5)
-    movies.append(m16)
-    m17 = Movie(title='The Silence of the Lambs', genre='Thriller', release_year=1991, stock=8)
-    movies.append(m17)
-    m18 = Movie(title='Eternal Sunshine of the Spotless Mind', genre='Romance', release_year=2004, stock=4)
-    movies.append(m18)
-    m19 = Movie(title='The Grand Budapest Hotel', genre='Comedy', release_year=2014, stock=7)
-    movies.append(m19)
-
-    return movies
+    movie_list = []
+    for movie in movies:
+        new_movie = Movie(
+            title=movie.get("title"),
+            description=movie.get("description"),
+            genre=movie.get("genre"),
+            image=movie.get("image"),
+            release_year=movie.get("year"),
+            stock=rc(range(0, 5)),
+        )
+        movie_list.append(new_movie.to_dict())
+    
+    return movie_list
 
 
 def create_rentals(users, movies):
