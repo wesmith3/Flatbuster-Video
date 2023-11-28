@@ -40,14 +40,44 @@ def create_users():
 
 def create_movies():
     movies = []
-    for _ in range(10):
-        m = Movie(
-            title=fake.job(),
-            genre=fake.word(),
-            release_year=fake.year(),
-            stock=rc(range(0, 4)),
-        )
-        movies.append(m)
+    m1 = Movie(title='Psycho', genre='Horror', release_year=1960, stock=4)
+    movies.append(m1)
+    m2 = Movie(title='Inception', genre='Action', release_year=2010, stock=9)
+    movies.append(m2)
+    m3 = Movie(title='Pulp Fiction', genre='Thriller', release_year=1994, stock=10)
+    movies.append(m3)
+    m4 = Movie(title='The Godfather', genre='Drama', release_year=1971, stock=6)
+    movies.append(m4)
+    m5 = Movie(title='Shawshank Redemption', genre='Drama', release_year=1994, stock=5)
+    movies.append(m5)
+    m6 = Movie(title='Fantastic Mr. Fox', genre='Comedy', release_year=2009, stock=3)
+    movies.append(m6)
+    m7 = Movie(title='Iron Man', genre='Action', release_year=2008, stock=8)
+    movies.append(m7)
+    m8 = Movie(title='The Hangover', genre='Comedy', release_year=2009, stock=6)
+    movies.append(m8)
+    m9 = Movie(title='The Notebook', genre='Romance', release_year=2004, stock=4)
+    movies.append(m9)
+    m10 = Movie(title='Frozen', genre='Animation', release_year=2013, stock=7)
+    movies.append(m10)
+    m11 = Movie(title='The Matrix', genre='Sci-Fi', release_year=1999, stock=5)
+    movies.append(m11)
+    m12 = Movie(title='Forrest Gump', genre='Drama', release_year=1994, stock=8)
+    movies.append(m12)
+    m13 = Movie(title='The Dark Knight', genre='Action', release_year=2008, stock=10)
+    movies.append(m13)
+    m14 = Movie(title='Titanic', genre='Romance', release_year=1997, stock=7)
+    movies.append(m14)
+    m15 = Movie(title='Avatar', genre='Sci-Fi', release_year=2009, stock=9)
+    movies.append(m15)
+    m16 = Movie(title='Jurassic Park', genre='Adventure', release_year=1993, stock=5)
+    movies.append(m16)
+    m17 = Movie(title='The Silence of the Lambs', genre='Thriller', release_year=1991, stock=8)
+    movies.append(m17)
+    m18 = Movie(title='Eternal Sunshine of the Spotless Mind', genre='Romance', release_year=2004, stock=4)
+    movies.append(m18)
+    m19 = Movie(title='The Grand Budapest Hotel', genre='Comedy', release_year=2014, stock=7)
+    movies.append(m19)
 
     return movies
 
@@ -67,9 +97,22 @@ def create_rentals(users, movies):
 
 def create_reviews(rentals):
     reviews = []
+    comments = [
+        "Great movie! Highly recommended.",
+        "The plot was a bit confusing, but I enjoyed it.",
+        "Awesome acting and cinematography.",
+        "Disappointed with the ending.",
+        "One of the best movies I've seen!",
+        "The characters were well-developed.",
+        "Not my cup of tea, but others might like it.",
+        "Couldn't stop laughing! Hilarious.",
+        "A must-watch for all film enthusiasts.",
+        "The soundtrack was amazing!"
+    ]
+
     for _ in range(10):
         r = Review(
-            comment=fake.sentence(),
+            comment=rc(comments),
             rating=rc(range(0, 5)),
             date=fake.future_date(),
             rental_id=rc([rental.id for rental in rentals])
@@ -80,9 +123,22 @@ def create_reviews(rentals):
 
 def create_complaints(users):
     complaints = []
-    for _ in range(25):
+    descriptions = [
+        "Poor customer service experience.",
+        "The product arrived damaged.",
+        "Issues with billing and payment.",
+        "Unsatisfactory product quality.",
+        "Delayed delivery, very frustrating.",
+        "Difficulty in contacting customer support.",
+        "Received the wrong item in my order.",
+        "Product doesn't match the description.",
+        "Frequent website/app errors.",
+        "Unresponsive customer support."
+    ]
+
+    for _ in range(10):
         c = Complaint(
-            description=fake.sentence(),
+            description=rc(descriptions),
             user_id=rc([user.id for user in users])
         )
         complaints.append(c)
@@ -93,8 +149,11 @@ def create_carts(users, movies):
     carts = []
     
     for _ in range(5):
+        user_id = rc([user.id for user in users])
+        while any(cart.user_id == user_id for cart in carts):
+            user_id = rc([user.id for user in users])
         c = Cart(
-            user_id=rc([user.id for user in users]),
+            user_id=user_id,
             movie_id=rc([movie.id for movie in movies]),
         )
         carts.append(c)
