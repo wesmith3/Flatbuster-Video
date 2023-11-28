@@ -71,6 +71,43 @@ class CartByID(Resource):
             return make_response(
                 {"errors": [str(e)]}, 400
             )
+    
+    def patch(self, id):
+        try:
+            cart = db.session.get(Cart, id)
+            if cart:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(cart, attr, data[attr])
+                db.session.add(cart)
+                db.session.commit()
+                return make_response(cart.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            cart = db.session.get(Cart, id)
+            if cart:
+                db.session.delete(cart)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
         
 api.add_resource(CartByID, '/carts/<int:id>')
 
@@ -121,6 +158,43 @@ class CartMovieByID(Resource):
             return make_response(
                 {"errors": [str(e)]}, 400
             )
+    
+    def patch(self, id):
+        try:
+            cart_movie = db.session.get(CartMovie, id)
+            if cart_movie:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(cart_movie, attr, data[attr])
+                db.session.add(cart_movie)
+                db.session.commit()
+                return make_response(cart_movie.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            cart_movie = db.session.get(CartMovie, id)
+            if cart_movie:
+                db.session.delete(cart_movie)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
         
 api.add_resource(CartMovieByID, '/cart_movies/<int:id>')
 
@@ -168,6 +242,43 @@ class ComplaintByID(Resource):
                     {"errors": "Complaint Not Found"}, 404
                 )
         except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def patch(self, id):
+        try:
+            complaint = db.session.get(Complaint, id)
+            if complaint:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(complaint, attr, data[attr])
+                db.session.add(complaint)
+                db.session.commit()
+                return make_response(complaint.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            complaint = db.session.get(Complaint, id)
+            if complaint:
+                db.session.delete(complaint)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -223,6 +334,43 @@ class MovieByID(Resource):
             return make_response(
                 {"errors": [str(e)]}, 400
             )
+    
+    def patch(self, id):
+        try:
+            movie = db.session.get(Movie, id)
+            if movie:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(movie, attr, data[attr])
+                db.session.add(movie)
+                db.session.commit()
+                return make_response(movie.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            movie = db.session.get(Movie, id)
+            if movie:
+                db.session.delete(movie)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
         
 api.add_resource(MovieByID, '/movies/<int:id>')
 
@@ -272,6 +420,43 @@ class RentalByID(Resource):
                     {"errors": "Rental Not Found"}, 404
                 )
         except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def patch(self, id):
+        try:
+            rental = db.session.get(Rental, id)
+            if rental:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(rental, attr, data[attr])
+                db.session.add(rental)
+                db.session.commit()
+                return make_response(rental.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            rental = db.session.get(Rental, id)
+            if rental:
+                db.session.delete(rental)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -327,6 +512,43 @@ class ReviewByID(Resource):
             return make_response(
                 {"errors": [str(e)]}, 400
             )
+    
+    def patch(self, id):
+        try:
+            review = db.session.get(Review, id)
+            if review:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(review, attr, data[attr])
+                db.session.add(review)
+                db.session.commit()
+                return make_response(review.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            review = db.session.get(Review, id)
+            if review:
+                db.session.delete(review)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
         
 api.add_resource(ReviewByID, '/reviews/<int:id>')
 
@@ -376,6 +598,43 @@ class StockRequestByID(Resource):
                     {"errors": "Stock-Request Not Found"}, 404
                 )
         except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def patch(self, id):
+        try:
+            stock_request = db.session.get(StockRequest, id)
+            if stock_request:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(stock_request, attr, data[attr])
+                db.session.add(stock_request)
+                db.session.commit()
+                return make_response(stock_request.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            stock_request = db.session.get(StockRequest, id)
+            if stock_request:
+                db.session.delete(stock_request)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -431,6 +690,43 @@ class UserByID(Resource):
                     {"errors": "User Not Found"}, 404
                 )
         except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def patch(self, id):
+        try:
+            user = db.session.get(User, id)
+            if user:
+                data = json.loads(request.data)
+                for attr in data:
+                    setattr(user, attr, data[attr])
+                db.session.add(user)
+                db.session.commit()
+                return make_response(user.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Update unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def delete(self,id):
+        try:
+            user = db.session.get(User, id)
+            if user:
+                db.session.delete(user)
+                db.session.commit()
+                return make_response({}, 204)
+            else:
+                return make_response(
+                    {"errors": "Delete unsuccessful"}, 400
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            db.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
