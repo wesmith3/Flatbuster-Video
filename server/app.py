@@ -10,7 +10,7 @@ from models.complaint import Complaint
 from models.stockrequest import StockRequest
 from models.cartmovie import CartMovie
 # Remote library imports
-from flask import request, Flask
+from flask import request, Flask, make_response
 from flask_restful import Resource
 
 # Local imports
@@ -22,27 +22,61 @@ from config import app, db, api
 
 @app.route('/')
 def index():
-    return '<h1>Flatbuster Video Server</h1>'
+    return '<h1>Project Server</h1>'
+
 
 class Users(Resource):
     def get(self):
         u_list = []
         users = User.query
         for user in users:
-            u_list.append(user.to_dict())
-        return u_list, 200
+            u_list.append(user)
+        return make_response(u_list.to_dict(), 200)
     
 api.add_resource(Users, '/users')
 
 class Movies(Resource):
     def get(self):
-        m_list = []
+
+        movie_list = []
         movies = Movie.query
         for movie in movies:
-            m_list.append(movie.to_dict())
-        return m_list, 200
+            movie_list.append(movie.to_dict())
+        return movie_list, 200
     
 api.add_resource(Movies, '/movies')
+
+class Complaints(Resource):
+    def get(self):
+        c_list = []
+        complaints = Complaint.query
+        for complaint in complaints:
+            c_list.append(complaint.to_dict())
+        return c_list, 200
+    
+api.add_resource(Complaints, '/complaints')
+
+class StockRequests(Resource):
+    def get(self):
+        sr_list = []
+        stock_requests = StockRequest.query
+        for stock_request in stock_requests:
+            sr_list.append(stock_request.to_dict())
+        return sr_list, 200
+    
+api.add_resource(StockRequests, '/stockrequests')
+
+class Carts(Resource):
+    def get(self):
+        c_list = []
+        carts = Cart.query
+        for cart in carts:
+            c_list.append(cart.to_dict(rules=(
+                '-movies.rentals',
+            )))
+        return c_list, 200
+    
+api.add_resource(Carts, '/carts')
 
 class Rentals(Resource):
     def get(self):

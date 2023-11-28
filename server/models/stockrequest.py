@@ -19,7 +19,8 @@ class StockRequest(db.Model, SerializerMixin):
     movie = db.relationship('Movie', back_populates='stock_requests')
     
     #serialization
-    serialize_rules=('-user.stock_requests',)
+    # serialize_rules=('-user.stock_requests',)
+    serialize_only = ('id', 'status','request_date','user_id','movie_id','movie.title','user.first_name','user.last_name', 'movie.id', 'user.id',)
     
     def __repr__(self):
         return f"<StockRequest {self.id} {self.request_date} {self.status}>"

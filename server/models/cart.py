@@ -17,7 +17,8 @@ class Cart(db.Model, SerializerMixin):
     cart_movies = db.relationship('CartMovie',back_populates='cart', cascade='all, delete-orphan')
     movies = association_proxy('cart_movies', 'movie')
 #serialization
-    serialize_rules=('-user.cart','-movies.carts','-cart_movies.cart')
+    # serialize_rules=('-user.cart','-movies.carts','-cart_movies.cart')
+    serialize_only = ('id','user_id', 'movie_id','cart_movies.id','movies.title')
     
     def __repr__(self):
         return f"<Cart {self.id} {self.user_id}>"
