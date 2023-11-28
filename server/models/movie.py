@@ -26,8 +26,23 @@ class Movie(db.Model, SerializerMixin):
     
 
     #Serialization
-    # serialize_rules = ('-rentals.movie', '-rentals.reviews', '-users.movies', '-users.stock_requests', '-users.rentals', '-stock_requests.movie', '-cart_movies.movie')
-    serialize_only = ('id', 'title', 'genre', 'release_year', 'stock', 'rentals.id', 'rentals.rental_date', 'rentals.return_date', 'rentals.user_id')
+    serialize_only = (
+        'id',
+        'title',
+        'genre',
+        'release_year',
+        'stock',
+        'rentals.id',
+        'rentals.rental_date',
+        'rentals.return_date',
+        'rentals.user_id',
+        'stock_requests.id',
+        'stock_requests.user_id',
+        'stock_requests.request_date',
+        'stock_requests.status',
+        'cart_movies.cart_id'
+        )
+    
     #Validations
     
     

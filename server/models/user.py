@@ -28,11 +28,11 @@ class User(db.Model, SerializerMixin):
         back_populates='user',
         cascade='all, delete-orphan'
         )
-    # cart = db.relationship(
-    #     "Cart",
-    #     back_populates='user',
-    #     cascade='all, delete-orphan'
-    #     )
+    cart = db.relationship(
+        "Cart",
+        back_populates='user',
+        cascade='all, delete-orphan'
+        )
     stock_requests=db.relationship(
         'StockRequest',
         back_populates='user',
@@ -41,10 +41,29 @@ class User(db.Model, SerializerMixin):
     # movies = association_proxy('rentals', 'movie')
 
     #Serialization
+    serialize_only = (
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'phone_number',
+        'address',
+        'is_employee',
+        'rentals.id',
+        'rentals.rental_date',
+        'rentals.return_date',
+        'rentals.movie_id',
+        'complaints.id',
+        'complaints.description',
+        'cart.id',
+        'stock_requests.id',
+        'stock_requests.movie_id',
+        'stock_requests.request_date',
+        'stock_requests.status'
+        )
     
     #Validations
-    serialize_rules = ('-rentals.user', '-complaints.user', '-stock_requests.user')
-    # serialize_rules = ('-rentals.user', '-movies.users', '-complaints.user','-cart.user', '-stock_requests.user')
+
     
     
     def __repr__(self):

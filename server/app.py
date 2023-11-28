@@ -37,6 +37,7 @@ api.add_resource(Users, '/users')
 
 class Movies(Resource):
     def get(self):
+
         movie_list = []
         movies = Movie.query
         for movie in movies:
@@ -77,6 +78,25 @@ class Carts(Resource):
     
 api.add_resource(Carts, '/carts')
 
+class Rentals(Resource):
+    def get(self):
+        r_list = []
+        rentals = Rental.query
+        for rental in rentals:
+            r_list.append(rental.to_dict())
+        return r_list, 200
+    
+api.add_resource(Rentals, '/rentals')
+
+class Reviews(Resource):
+    def get(self):
+        r_list = []
+        reviews = Review.query
+        for review in reviews:
+            r_list.append(review.to_dict())
+        return r_list, 200
+    
+api.add_resource(Reviews, '/reviews')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

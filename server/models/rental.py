@@ -20,7 +20,20 @@ class Rental(db.Model, SerializerMixin):
     reviews = db.relationship('Review', back_populates='rental', cascade='all, delete-orphan')
     
     #Serialization
-    serialize_rules = ('-user.rentals', '-movie.rentals', '-reviews.rental')
+    serialize_rules = ('-user.rentals', '-user.stock_requests', '-user.complaints')
+    serialize_only = (
+        'id',
+        'rental_date',
+        'return_date',
+        'user_id',
+        'movie_id',
+        'user.first_name',
+        'user.last_name',
+        'user.email',
+        'user.phone_number',
+        'user.address',
+        'user.is_employee',
+        )
     
     #Validations
     
