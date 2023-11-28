@@ -14,7 +14,8 @@ class Movie(db.Model, SerializerMixin):
     genre = db.Column(db.String, nullable=False)
     release_year = db.Column(db.Integer, nullable=False)
     stock = db.Column(db.Integer, nullable=False)
-    
+    description = db.Column(db.String, nullable=False)
+    image = db.Column(db.String, nullable=False)
     #Relationships
     rentals = db.relationship(
         'Rental', back_populates='movie', cascade='all, delete-orphan'
@@ -30,17 +31,19 @@ class Movie(db.Model, SerializerMixin):
         'id',
         'title',
         'genre',
+        'description',
+        'image',
         'release_year',
         'stock',
-        'rentals.id',
-        'rentals.rental_date',
-        'rentals.return_date',
-        'rentals.user_id',
-        'stock_requests.id',
-        'stock_requests.user_id',
-        'stock_requests.request_date',
-        'stock_requests.status',
-        'cart_movies.cart_id'
+        # 'rentals.id',
+        # 'rentals.rental_date',
+        # 'rentals.return_date',
+        # 'rentals.user_id',
+        # 'stock_requests.id',
+        # 'stock_requests.user_id',
+        # 'stock_requests.request_date',
+        # 'stock_requests.status',
+        # 'cart_movies.cart_id'
         )
     
     #Validations

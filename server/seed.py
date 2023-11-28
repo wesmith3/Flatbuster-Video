@@ -46,12 +46,12 @@ def create_movies():
         new_movie = Movie(
             title=movie.get("title"),
             description=movie.get("description"),
-            genre=movie.get("genre"),
+            genre=movie.get("genre")[0],
             image=movie.get("image"),
             release_year=movie.get("year"),
             stock=rc(range(0, 5)),
         )
-        movie_list.append(new_movie.to_dict())
+        movie_list.append(new_movie)
     
     return movie_list
 
