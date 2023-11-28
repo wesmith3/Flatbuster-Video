@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import MenuBar from "./MenuBar";
 import MovieCollection from './MovieCollection'
 import Welcome from "./Welcome";
+import Router from "./Router";
 
 function App() {
 
@@ -13,8 +14,9 @@ function App() {
   <div>
     <Header />
     <MenuBar />
-    <Welcome />
+    {/* <Welcome /> */}
     {/* <MovieCollection /> */}
+    <Router is_employee={false} is_logged_in={true} />
     <Footer />
   </div>
   )
