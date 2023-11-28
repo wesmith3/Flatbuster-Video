@@ -13,7 +13,7 @@ class Cart(db.Model, SerializerMixin):
 
 #relationship
 
-    # user = db.relationship('User', back_populates='cart')
+    user = db.relationship('User', back_populates='cart')
     cart_movies = db.relationship('CartMovie',back_populates='cart', cascade='all, delete-orphan')
     movies = association_proxy('cart_movies', 'movie')
 #serialization

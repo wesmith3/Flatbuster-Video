@@ -92,7 +92,7 @@ def create_complaints(users):
 def create_carts(users, movies):
     carts = []
     
-    for _ in range(25):
+    for _ in range(5):
         c = Cart(
             user_id=rc([user.id for user in users]),
             movie_id=rc([movie.id for movie in movies]),

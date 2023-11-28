@@ -18,7 +18,15 @@ class Review(db.Model, SerializerMixin):
     rental = db.relationship('Rental', back_populates='reviews')
     
     #Serialization
-    serialize_rules = ('-rental.reviews',)
+    serialize_only = (
+        'id',
+        'comment',
+        'rating',
+        'date',
+        'rental_id',
+        'rental.movie_id',
+        'rental.user_id'
+    )
     
     def __repr__(self):
         return f"<Review: {self.id}, Comment:{self.comment}, Rating:{self.rating}, Date:{self.date}>"
