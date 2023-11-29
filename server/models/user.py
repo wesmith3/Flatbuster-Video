@@ -50,17 +50,17 @@ class User(db.Model, SerializerMixin):
         'phone_number',
         'address',
         'is_employee',
-        'rentals.id',
-        'rentals.rental_date',
-        'rentals.return_date',
-        'rentals.movie_id',
-        'complaints.id',
-        'complaints.description',
-        'cart.id',
-        'stock_requests.id',
-        'stock_requests.movie_id',
-        'stock_requests.request_date',
-        'stock_requests.status'
+        # 'rentals.id',
+        # 'rentals.rental_date',
+        # 'rentals.return_date',
+        # 'rentals.movie_id',
+        # 'complaints.id',
+        # 'complaints.description',
+        # 'cart.id',
+        # 'stock_requests.id',
+        # 'stock_requests.movie_id',
+        # 'stock_requests.request_date',
+        # 'stock_requests.status'
         )
     
     #Validations
