@@ -49,7 +49,7 @@ def create_movies():
             genre=movie.get("genre")[0],
             image=movie.get("image"),
             release_year=movie.get("year"),
-            stock=rc(range(0, 5)),
+            stock=rc(range(0, 10)),
         )
         movie_list.append(new_movie)
     
