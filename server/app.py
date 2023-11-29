@@ -15,7 +15,7 @@ from flask_restful import Resource
 import json
 
 # Local imports
-from config import app, db, api
+from config import app, db, api, flask_bcrypt
 # Add your model imports
 
 
@@ -649,7 +649,7 @@ class Users(Resource):
             u_list = []
             users = User.query
             for user in users:
-                u_list.append(user.to_dict())
+                u_list.append(user.to_dict(rules=('-password',)))
             return make_response(u_list, 200)
         except (ValueError, AttributeError, TypeError) as e:
             return make_response(
@@ -659,11 +659,12 @@ class Users(Resource):
     def post(self):
         try:
             data = json.loads(request.data)
+            pw_hash = flask_bcrypt.generate_password_hash(data["password"])
             new_complaint = Complaint(
                 first_name = data["first_name"],
                 last_name = data["last_name"],
                 email = data["email"],
-                password = data["password"],
+                password = pw_hash,
                 phone_number = data["phone_number"],
                 address = data["address"],
                 is_employee = data["is_employee"]
@@ -684,7 +685,7 @@ class UserByID(Resource):
         try:
             user = db.session.get(User, id)
             if user:
-                return make_response(user.to_dict(), 200)
+                return make_response(user.to_dict(rules=('-password',)), 200)
             else:
                 return make_response(
                     {"errors": "User Not Found"}, 404
@@ -732,6 +733,24 @@ class UserByID(Resource):
             )
         
 api.add_resource(UserByID, '/users/<int:id>')
+
+@app.route('/login/verify')
+def login():
+    try:
+        data = json.loads(request.data)
+        user = User.query.filter_by(email=data["email"]).first()
+        user_pw_hash = user["password"]
+        data_pw = data["password"]
+        access = flask_bcrypt.check_password_hash(user_pw_hash, data_pw)
+        response = {
+            "access": access
+        }
+        return make_response(response, 200)
+        
+    except (ValueError, AttributeError, TypeError) as e:
+        return make_response(
+            {"errors": [str(e)]}, 400
+        )
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
