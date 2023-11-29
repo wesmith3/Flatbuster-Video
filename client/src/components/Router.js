@@ -18,7 +18,7 @@ function Router({ is_logged_in }) {
           <Route path="/complaints" exact component={Complaint} />
           <Route path="/login" exact component={Login} />
           <Route path="/movies" exact component={MovieCollection} />
-          <Route path="/profiles" exact component={Profile} />
+          <Route path="/my_account" exact component={Profile} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/stock_requests" exact component={StockRequest} />
           <Route path="/" exact component={Welcome} />
