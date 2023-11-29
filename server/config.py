@@ -11,6 +11,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import MetaData
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from flask_bcrypt import Bcrypt
 import os
 
 # Local imports
@@ -28,6 +29,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
+flask_bcrypt = Bcrypt(app)
 
 # Instantiate REST API
 api = Api(app)
