@@ -14,11 +14,11 @@ function Router({ is_logged_in }) {
     <>
       {is_logged_in ? (
         <Switch>
-          <Route path="/carts" exact component={Cart} />
+          <Route path="/my_cart" exact component={Cart} />
           <Route path="/complaints" exact component={Complaint} />
           <Route path="/login" exact component={Login} />
           <Route path="/movies" exact component={MovieCollection} />
-          <Route path="/profiles" exact component={Profile} />
+          <Route path="/my_account" exact component={Profile} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/stock_requests" exact component={StockRequest} />
           <Route path="/" exact component={Welcome} />
@@ -31,7 +31,7 @@ function Router({ is_logged_in }) {
           <Route path="*" component={Welcome} />
         </Switch>
       )}
-    </>
+  </>
   );
 }
 

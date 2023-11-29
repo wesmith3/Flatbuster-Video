@@ -13,7 +13,7 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    phone_number = db.Column(db.Integer, nullable=False)
+    phone_number = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
     is_employee = db.Column(db.Boolean, nullable=False)
     
@@ -50,17 +50,17 @@ class User(db.Model, SerializerMixin):
         'phone_number',
         'address',
         'is_employee',
-        'rentals.id',
-        'rentals.rental_date',
-        'rentals.return_date',
-        'rentals.movie_id',
-        'complaints.id',
-        'complaints.description',
-        'cart.id',
-        'stock_requests.id',
-        'stock_requests.movie_id',
-        'stock_requests.request_date',
-        'stock_requests.status'
+        # 'rentals.id',
+        # 'rentals.rental_date',
+        # 'rentals.return_date',
+        # 'rentals.movie_id',
+        # 'complaints.id',
+        # 'complaints.description',
+        # 'cart.id',
+        # 'stock_requests.id',
+        # 'stock_requests.movie_id',
+        # 'stock_requests.request_date',
+        # 'stock_requests.status'
         )
     
     #Validations
