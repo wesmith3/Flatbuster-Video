@@ -3,11 +3,13 @@ import { Card, Image, Modal, Button, Rating } from 'semantic-ui-react';
 
 function MovieCard({ title, genre, release_year, stock, description, image }) {
   const [open, setOpen] = useState(false);
+  const [isSoldOut, setIsSoldOut] = useState(stock === 0);
 
   return (
     <div onClick={() => setOpen(true)}>
       <Card>
-        <Image src={image} wrapped ui={false}/>
+        <Image src={image} wrapped ui={true} dimmed={isSoldOut} />
+        {isSoldOut && <div className="sold-out-overlay">OUT OF STOCK</div>}
       </Card>
 
       <Modal
@@ -20,10 +22,10 @@ function MovieCard({ title, genre, release_year, stock, description, image }) {
       >
         <Modal.Header>{title}</Modal.Header>
         <Modal.Content image>
-          <Image size='small' src={image} />
+          <Image size='medium' src={image} />
           <Modal.Description>
             <p>
-              {description}
+              <strong>Quick Synopsis:</strong> {description}
             </p>
             <p>
               <strong>Genre:</strong> {genre}
@@ -39,7 +41,7 @@ function MovieCard({ title, genre, release_year, stock, description, image }) {
         </Modal.Content>
 
         <Modal.Actions>
-          <Button onClick={() => setOpen(false)}>Close</Button>
+          <Button color='primary'>Add to Cart</Button>
         </Modal.Actions>
       </Modal>
     </div>

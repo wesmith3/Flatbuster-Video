@@ -4,7 +4,7 @@ import { Image } from 'semantic-ui-react'
 function Welcome() {
   return (
     <div className='welcome-image'>
-        <Image src="././Storefront.jpeg" alt="shop"/>
+        <Image src="././Welcome.jpeg" alt="shop"/>
     </div>
   )
 }
