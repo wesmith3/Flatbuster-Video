@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Button,
   Form,
@@ -9,38 +10,72 @@ import {
   Segment,
 } from "semantic-ui-react";
 
-const Login = () => (
-  <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
-    <Grid.Column style={{ maxWidth: 450 }}>
-      <Header as="h2" color="teal" textAlign="center">
-        <Image src="/logo.png" /> Log-in to your account
-      </Header>
-      <Form size="large">
-        <Segment stacked>
-          <Form.Input
-            fluid
-            icon="user"
-            iconPosition="left"
-            placeholder="E-mail address"
-          />
-          <Form.Input
-            fluid
-            icon="lock"
-            iconPosition="left"
-            placeholder="Password"
-            type="password"
-          />
+const Login = () => {
+  const emptyState = {
+    email: "",
+    password: "",
+  };
+  const [formData, setFormData] = useState(emptyState);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:5555/login/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setFormData(emptyState);
+        window.localStorage.setItem("isLoggedIn", true);
+      })
+      .catch((err) => alert(err)); //useNavigate
+  };
 
-          <Button color="teal" fluid size="large">
-            Login
-          </Button>
-        </Segment>
-      </Form>
-      <Message>
-        New to us? <a href="/signup">Sign Up</a>
-      </Message>
-    </Grid.Column>
-  </Grid>
-);
+  return (
+    <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h2" color="blue" textAlign="center">
+          <Image className="img-logo" src="/logo.png" /> Log-in to your account
+        </Header>
+        <Form size="large" onSubmit={handleSubmit}>
+          <Segment stacked>
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="E-mail address"
+              value={formData.email}
+              onChange={handleChange}
+              name="email"
+            />
+            <Form.Input
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              name="password"
+            />
+
+            <Button color="blue" fluid size="large">
+              Login
+            </Button>
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <a href="/signup">Sign Up</a>
+        </Message>
+      </Grid.Column>
+    </Grid>
+  );
+};
 
 export default Login;

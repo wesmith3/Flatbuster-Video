@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, Image, Modal, Button, Rating } from 'semantic-ui-react';
+import React, { useState } from "react";
+import { Card, Image, Modal, Button, Rating } from "semantic-ui-react";
 
 function MovieCard({ title, genre, release_year, stock, description, image, rating }) {
   const [open, setOpen] = useState(false);
@@ -13,16 +13,17 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
       </Card>
 
       <Modal
-        className='movie_modal'
+        className="movie_modal"
         onClose={() => setOpen(false)}
+
         dimmed='show'
         dimmer='blurring'
         size='small'
         open={open}
-      >
+   
         <Modal.Header>{title}</Modal.Header>
         <Modal.Content image>
-          <Image size='medium' src={image} />
+          <Image size="medium" src={image} />
           <Modal.Description>
             <p>
               <strong>Quick Synopsis:</strong> {description}
@@ -30,7 +31,8 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
             <p>
               <strong>Genre:</strong> {genre}
             </p>
-            <p>
+
+
               <strong>Year:</strong> {release_year}
             </p>
             <div className='ratingDiv' style={{margin: "0 0 1em", lineHeight: "1.4285em"}}>
@@ -39,12 +41,14 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
             </div>
             <p>
               Available copies: {stock}
+
             </p>
+            <p>Available copies: {stock}</p>
           </Modal.Description>
         </Modal.Content>
 
-        <Modal.Actions>
           <Button color='blue'>Add to Cart</Button>
+
         </Modal.Actions>
       </Modal>
     </div>
