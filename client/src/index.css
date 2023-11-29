@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #28282b !important;
+  background-color: #28282b;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -78,7 +78,7 @@ body {
 
 .custom-cart-table {
   width: 80% !important;
-  margin: 2% auto !important; /* Center the table horizontally */
+  margin: 2% auto !important;
   border-collapse: collapse !important;
   background-color: #1030ad !important;
   color: white !important;
@@ -87,13 +87,13 @@ body {
 .custom-cart-table th,
 .custom-cart-table td {
   padding: 1.5% !important;
-  border: 2px solid #ffcc00 !important; /* Add a border for a more cart-like appearance */
+  border: 2px solid #ffcc00 !important;
   text-align: center !important;
 }
 
 .custom-cart-table th {
   background-color: #1030ad !important;
-  color: white !important; /* Add a background color to header cells */
+  color: white !important;
 }
 
 .custom-cart-table strong {

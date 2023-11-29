@@ -11,16 +11,14 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
         <Image src={image} wrapped ui={true} dimmed={isSoldOut ? "show": "hide"} />
         {isSoldOut && <div className="sold-out-overlay">OUT OF STOCK</div>}
       </Card>
-
       <Modal
         className="movie_modal"
         onClose={() => setOpen(false)}
-
         dimmed='show'
         dimmer='blurring'
         size='small'
         open={open}
-   
+        >
         <Modal.Header>{title}</Modal.Header>
         <Modal.Content image>
           <Image size="medium" src={image} />
@@ -31,24 +29,20 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
             <p>
               <strong>Genre:</strong> {genre}
             </p>
-
-
+            <p>
               <strong>Year:</strong> {release_year}
             </p>
             <div className='ratingDiv' style={{margin: "0 0 1em", lineHeight: "1.4285em"}}>
-              <strong>Average Rating:</strong>
-              <Rating icon='star' defaultRating={rating/2} maxRating={5} />
+              <strong>Average Rating:</strong> {rating}/10
+              <Rating icon='star' defaultRating={1} />
             </div>
             <p>
-              Available copies: {stock}
-
+              <strong>Available Copies:</strong> {stock}
             </p>
-            <p>Available copies: {stock}</p>
           </Modal.Description>
         </Modal.Content>
-
+        <Modal.Actions>
           <Button color='blue'>Add to Cart</Button>
-
         </Modal.Actions>
       </Modal>
     </div>
