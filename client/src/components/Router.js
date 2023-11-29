@@ -11,7 +11,7 @@ import Welcome from "./Welcome";
 
 function Router({ is_logged_in }) {
   return (
-    <>
+
       {is_logged_in ? (
         <Switch>
           <Route path="/carts" exact component={Cart} />
