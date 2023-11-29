@@ -46,6 +46,7 @@ class User(db.Model, SerializerMixin):
         'first_name',
         'last_name',
         'email',
+        'password',
         'phone_number',
         'address',
         'is_employee',
