@@ -10,13 +10,13 @@ function MenuBar() {
         <Menu.Item as={Link} to='/' name='home'/>
         <Menu.Item name='Popular'/>
         <Menu.Item as={Link} to='/movies' name='Browse Movies'/>
-        <Menu.Item name='stock request'/>
+        <Menu.Item name='stock request' as={Link} to='/stock_requests'/>
         <Menu.Menu position='right'>
           <Menu.Item>
-            <Button color='yellow'>Login</Button>
+            <Button color='yellow' as={Link} to='/login'>Login</Button>
           </Menu.Item>
           <Menu.Item>
-            <Button primary>Sign Up</Button>
+            <Button primary as={Link} to='/signup'>Sign Up</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

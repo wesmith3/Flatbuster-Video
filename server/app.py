@@ -47,7 +47,7 @@ class Carts(Resource):
                 user_id = data["user_id"]
             )
             db.session.add(new_cart)
-            db.commit()
+            db.session.commit()
             return make_response(new_cart.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -87,7 +87,7 @@ class CartByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -104,7 +104,7 @@ class CartByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -134,7 +134,7 @@ class CartMovies(Resource):
                 movie_id = data["movie_id"],
             )
             db.session.add(new_cart_movie)
-            db.commit()
+            db.session.commit()
             return make_response(new_cart_movie.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -174,7 +174,7 @@ class CartMovieByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -191,7 +191,7 @@ class CartMovieByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -221,7 +221,7 @@ class Complaints(Resource):
                 description = data["description"]
             )
             db.session.add(new_complaint)
-            db.commit()
+            db.session.commit()
             return make_response(new_complaint.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -261,7 +261,7 @@ class ComplaintByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -278,7 +278,7 @@ class ComplaintByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -310,7 +310,7 @@ class Movies(Resource):
                 stock = data["stock"]
             )
             db.session.add(new_movie)
-            db.commit()
+            db.session.commit()
             return make_response(new_movie.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -350,7 +350,7 @@ class MovieByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -367,7 +367,7 @@ class MovieByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -399,7 +399,7 @@ class Rentals(Resource):
                 movie_id = data["movie_id"]
             )
             db.session.add(new_rental)
-            db.commit()
+            db.session.commit()
             return make_response(new_rental.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -439,7 +439,7 @@ class RentalByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -456,7 +456,7 @@ class RentalByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -488,7 +488,7 @@ class Reviews(Resource):
                 rental_id = data["rental_id"],
             )
             db.session.add(new_review)
-            db.commit()
+            db.session.commit()
             return make_response(new_review.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -528,7 +528,7 @@ class ReviewByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -545,7 +545,7 @@ class ReviewByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -577,7 +577,7 @@ class StockRequests(Resource):
                 movie_id = data["movie_id"]
             )
             db.session.add(new_stock_request)
-            db.commit()
+            db.session.commit()
             return make_response(new_stock_request.to_dict(), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
@@ -617,7 +617,7 @@ class StockRequestByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -634,7 +634,7 @@ class StockRequestByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -660,7 +660,8 @@ class Users(Resource):
         try:
             data = json.loads(request.data)
             pw_hash = flask_bcrypt.generate_password_hash(data["password"])
-            new_complaint = Complaint(
+            print(pw_hash)
+            new_user = User(
                 first_name = data["first_name"],
                 last_name = data["last_name"],
                 email = data["email"],
@@ -669,9 +670,9 @@ class Users(Resource):
                 address = data["address"],
                 is_employee = data["is_employee"]
             )
-            db.session.add(new_complaint)
-            db.commit()
-            return make_response(new_complaint.to_dict(), 201)
+            db.session.add(new_user)
+            db.session.commit()
+            return make_response(new_user.to_dict(rules=("-password",)), 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
             return make_response(
@@ -710,7 +711,7 @@ class UserByID(Resource):
                     {"errors": "Update unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
@@ -727,18 +728,18 @@ class UserByID(Resource):
                     {"errors": "Delete unsuccessful"}, 400
                 )
         except (ValueError, AttributeError, TypeError) as e:
-            db.rollback()
+            db.session.rollback()
             return make_response(
                 {"errors": [str(e)]}, 400
             )
         
 api.add_resource(UserByID, '/users/<int:id>')
 
-@app.route('/login/verify')
+@app.route('/login/verify', methods=["POST"])
 def login():
     try:
         data = json.loads(request.data)
-        user = User.query.filter_by(email=data["email"]).first()
+        user = User.query.filter_by(email=data["email"]).first().to_dict()
         user_pw_hash = user["password"]
         data_pw = data["password"]
         access = flask_bcrypt.check_password_hash(user_pw_hash, data_pw)
