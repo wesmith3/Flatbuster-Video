@@ -7,7 +7,7 @@ from random import randint, choice as rc
 from faker import Faker
 
 # Local imports
-from config import app, db
+from config import app, db, flask_bcrypt
 # from app_setup import db
 from models.user import User
 from models.rental import Rental
@@ -26,6 +26,7 @@ fake = Faker()
 def create_users():
     users = []
     for _ in range(10):
+        pw_hash = flask_bcrypt.generate_password_hash("password").decode("utf-8")
         c = User(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
@@ -33,7 +34,7 @@ def create_users():
             phone_number=fake.phone_number(),
             address=fake.address(),
             is_employee=fake.boolean(chance_of_getting_true=20),
-            password="password"
+            _password=pw_hash
         )
         users.append(c)
 
@@ -46,10 +47,11 @@ def create_movies():
         new_movie = Movie(
             title=movie.get("title"),
             description=movie.get("description"),
-            genre=movie.get("genre")[0],
+            genre=', '.join(movie.get("genre")),
             image=movie.get("image"),
             release_year=movie.get("year"),
             stock=rc(range(0, 10)),
+            rating=movie.get("rating"),
         )
         movie_list.append(new_movie)
     

@@ -740,9 +740,7 @@ def login():
     try:
         data = json.loads(request.data)
         user = User.query.filter_by(email=data["email"]).first().to_dict()
-        user_pw_hash = user["password"]
-        data_pw = data["password"]
-        access = flask_bcrypt.check_password_hash(user_pw_hash, data_pw)
+        access = user.verify(data["password"])
         response = {
             "access": access
         }
