@@ -16,6 +16,7 @@ class Movie(db.Model, SerializerMixin):
     stock = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
+    rating = db.Column(db.String)
     #Relationships
     rentals = db.relationship(
         'Rental', back_populates='movie', cascade='all, delete-orphan'
@@ -35,6 +36,7 @@ class Movie(db.Model, SerializerMixin):
         'image',
         'release_year',
         'stock',
+        'rating',
         # 'rentals.id',
         # 'rentals.rental_date',
         # 'rentals.return_date',

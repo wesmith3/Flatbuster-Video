@@ -16,7 +16,7 @@ function MenuBar() {
             <Button color='yellow' as={Link} to='/login'>Login</Button>
           </Menu.Item>
           <Menu.Item>
-            <Button primary as={Link} to='/signup'>Sign Up</Button>
+            <Button color='blue' as={Link} to='/signup'>Sign Up</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
