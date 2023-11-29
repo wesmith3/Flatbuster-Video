@@ -9,7 +9,6 @@ function MenuBar() {
         <Menu.Item name='home'/>
         <Menu.Item name='Popular'/>
         <Menu.Item name='Browse Movies'/>
-        {/* <Menu.Item name='Browse games'/> */}
         <Menu.Item name='stock request'/>
         <Menu.Menu position='right'>
           <Menu.Item>
