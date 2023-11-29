@@ -11,14 +11,30 @@ import {
 } from "semantic-ui-react";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = () => {
-    console.log({
-      email,
-      password,
-    });
+  const emptyState = {
+    email: "",
+    password: "",
+  };
+  const [formData, setFormData] = useState(emptyState);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:5555/login/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setFormData(emptyState);
+        window.localStorage.setItem("isLoggedIn", true);
+      })
+      .catch((err) => alert(err)); //useNavigate
   };
 
   return (
@@ -34,8 +50,9 @@ const Login = () => {
               icon="user"
               iconPosition="left"
               placeholder="E-mail address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
+              name="email"
             />
             <Form.Input
               fluid
@@ -43,8 +60,9 @@ const Login = () => {
               iconPosition="left"
               placeholder="Password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
+              name="password"
             />
 
             <Button color="blue" fluid size="large">

@@ -11,23 +11,40 @@ import {
 } from "semantic-ui-react";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = () => {
-    console.log({
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      address,
-      password,
-    });
+  const emptyState = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    password: "",
+    is_employee: false,
   };
+  const [formData, setFormData] = useState(emptyState);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+
+    fetch("http://localhost:5555/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setFormData(emptyState);
+        window.localStorage.setItem("isLoggedIn", true);
+      })
+      .catch((err) => alert(err)); //useNavigate
+  };
+
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
@@ -41,8 +58,9 @@ const Signup = () => {
               icon="user"
               iconPosition="left"
               placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={formData.first_name}
+              name="first_name"
+              onChange={handleChange}
             />
 
             <Form.Input
@@ -50,32 +68,36 @@ const Signup = () => {
               icon="user"
               iconPosition="left"
               placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={formData.last_name}
+              name="last_name"
+              onChange={handleChange}
             />
             <Form.Input
               fluid
               icon="mail"
               iconPosition="left"
               placeholder="E-mail address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              name="email"
+              onChange={handleChange}
             />
             <Form.Input
               fluid
               icon="phone"
               iconPosition="left"
               placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              value={formData.phone_number}
+              onChange={handleChange}
+              name="phone_number"
             />
             <Form.Input
               fluid
               icon="home"
               iconPosition="left"
               placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={formData.address}
+              onChange={handleChange}
+              name="address"
             />
             <Form.Input
               fluid
@@ -83,8 +105,9 @@ const Signup = () => {
               iconPosition="left"
               placeholder="Password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
+              name="password"
             />
 
             <Button color="blue" fluid size="large">
