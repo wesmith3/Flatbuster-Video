@@ -34,7 +34,7 @@ def create_users():
             phone_number=fake.phone_number(),
             address=fake.address(),
             is_employee=fake.boolean(chance_of_getting_true=20),
-            _password=pw_hash
+            password=pw_hash
         )
         users.append(c)
 
