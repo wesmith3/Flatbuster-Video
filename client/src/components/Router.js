@@ -14,7 +14,7 @@ function Router({ is_logged_in }) {
     <>
       {is_logged_in ? (
         <Switch>
-          <Route path="/carts" exact component={Cart} />
+          <Route path="/my_cart" exact component={Cart} />
           <Route path="/complaints" exact component={Complaint} />
           <Route path="/login" exact component={Login} />
           <Route path="/movies" exact component={MovieCollection} />
