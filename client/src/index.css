@@ -63,3 +63,35 @@ body {
   font-weight: bold;
   z-index: 1;
 }
+
+.custom-cart-table {
+  width: 80% !important;
+  margin: 2% auto !important; /* Center the table horizontally */
+  border-collapse: collapse !important;
+  background-color: #1030ad !important;
+  color: white !important;
+}
+
+.custom-cart-table th,
+.custom-cart-table td {
+  padding: 1.5% !important;
+  border: 2px solid #ffcc00 !important; /* Add a border for a more cart-like appearance */
+  text-align: center !important;
+}
+
+.custom-cart-table th {
+  background-color: #1030ad !important;
+  color: white !important; /* Add a background color to header cells */
+}
+
+.custom-cart-table strong {
+  font-size: 1.2em !important;
+  color: white !important;
+  background-color: #1030ad !important;
+}
+
+.cart-header {
+    text-align: center !important;
+    font-weight: bold !important;
+    color: white !important;
+  }
