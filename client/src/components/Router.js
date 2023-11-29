@@ -1,43 +1,72 @@
 import { Switch, Route } from "react-router-dom";
 import Cart from "./Cart";
 import Complaint from "./Complaint";
+import Error from "./Error";
 import Login from "./Login";
 import MovieCollection from "./MovieCollection";
 import Profile from "./Profile";
-import StockRequest from "./StockRequest";
 import Signup from "./Signup";
+import StockRequest from "./StockRequest";
 import Welcome from "./Welcome";
 
-function Router({is_logged_in, is_employee}) {
-    // const Switch =  ( 
-    //     <>
-    //         <Route path="/leader-board" element={<LeaderBoard />} />,
-    //         <Route path="/instructions" element={<Instructions />} />,
-    //         <Route path="/your-puzzles" element={<YourPuzzles />} />,
-    //         <Route path="/loading" element={<Loading/>} />
-    //         <Route path="/loading/:param" element={<Loading/>} />
-    //     </>
-    // )
+function Router({is_logged_in}) {
   return (
     <>
-      <Switch>
-        {is_logged_in ? (is_employee ? (
-            <Signup />
-        ) : 
-        (<Route exact path="/carts">
-                <Cart />
-            </Route>,
-            <Route exact path="/complaints">
-                <Complaint />
-            </Route>,
-            <Route exact path="/movies">
-                <MovieCollection />
-            </Route>)
-        ) : null}
-        <Route exact path="/">
-            <Welcome />
-        </Route>
-      </Switch>
+        {is_logged_in ? 
+            (<Switch>
+                <Route
+                    path="/carts" exact
+                    component={Cart}
+                />
+                <Route
+                    path="/complaints" exact
+                    component={Complaint}
+                />
+                <Route
+                    path="/login" exact
+                    component={Login}
+                />
+                <Route
+                    path="/movies" exact
+                    component={MovieCollection}
+                />
+                <Route
+                    path="/profiles" exact
+                    component={Profile}
+                />
+                <Route
+                    path="/signup" exact
+                    component={Signup}
+                />
+                <Route
+                    path="/stock_requests" exact
+                    component={StockRequest}
+                />
+                <Route
+                    path="/" exact
+                    component={Welcome}
+                />
+                <Route
+                    path="*"
+                    component={Error}
+                />
+            </Switch>
+            ) : 
+            <Switch>
+                <Route
+                    path="/login"
+                    component={Login}
+                />
+                <Route
+                    path="/signup"
+                    component={Signup}
+                />
+                <Route
+                    path="*"
+                    component={Welcome}
+                />
+            </Switch>
+        } 
     </>
   );
 }
