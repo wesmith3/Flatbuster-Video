@@ -1,4 +1,5 @@
 import { Switch, Route } from "react-router-dom";
+import { useState } from 'react'
 import Cart from "./Cart";
 import Complaint from "./Complaint";
 import Error from "./Error";
@@ -10,14 +11,17 @@ import StockRequest from "./StockRequest";
 import Welcome from "./Welcome";
 
 function Router({ is_logged_in }) {
+  const [user, setUser] = useState({id: 0})
+  const currentUser = (new_user) => setUser(new_user)
+  console.log(`User - ${user.id}`)
   return (
     <>
       {is_logged_in ? (
         <Switch>
           <Route path="/my_cart" exact component={Cart} />
           <Route path="/complaints" exact component={Complaint} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/movies" exact component={MovieCollection} />
+          <Route path="/login" exact render={() => <Login currentUser={currentUser}/>} />
+          <Route path="/movies" exact render={() => <MovieCollection id={user.id}/>} />
           <Route path="/my_account" exact component={Profile} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/stock_requests" exact component={StockRequest} />

@@ -26,7 +26,7 @@ fake = Faker()
 def create_users():
     users = []
     for _ in range(10):
-        pw_hash = flask_bcrypt.generate_password_hash("password").decode("utf-8")
+        # pw_hash = flask_bcrypt.generate_password_hash("password").decode("utf-8")
         c = User(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
@@ -34,8 +34,8 @@ def create_users():
             phone_number=fake.phone_number(),
             address=fake.address(),
             is_employee=fake.boolean(chance_of_getting_true=20),
-            password=pw_hash
         )
+        c.password = "password"
         users.append(c)
 
     return users
@@ -161,6 +161,7 @@ def create_movie_cart(carts, movies):
         movie_cart.append(mc)
 
     return movie_cart
+
 
 if __name__ == '__main__':
 
