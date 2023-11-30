@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Menu, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-function MenuBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+function MenuBar({ is_logged_in }) {
+  // const [is_logged_in, setis_logged_in] = useState(true)
 
 
   return (
@@ -13,7 +13,7 @@ function MenuBar() {
         <Menu.Item as={Link} to='/movies' name='Browse Movies'/>
         <Menu.Item name='stock request' as={Link} to='/stock_requests'/>
         <Menu.Menu position='right'>
-          {isLoggedIn ? (
+          {is_logged_in ? (
           <>
             <Menu.Item>
               <Button color='yellow' as={Link} to='/my_account'>Account</Button>

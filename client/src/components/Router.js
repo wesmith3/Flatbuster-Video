@@ -12,8 +12,10 @@ import Welcome from "./Welcome";
 
 function Router({ is_logged_in }) {
   const [user, setUser] = useState({id: 0})
-  const currentUser = (new_user) => setUser(new_user)
-  console.log(`User - ${user.id}`)
+  const currentUser = (new_user) => {
+    setUser(new_user)
+  }
+  // console.log(`User - ${user.id}`)
   
   return (
     <>
