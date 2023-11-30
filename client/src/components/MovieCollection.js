@@ -17,7 +17,7 @@ function MovieCollection({ id }) {
     fetch(URL)
     .then(res => res.json())
     .then(data => {
-      const show = JSON.parse(localStorage.getItem('grantAccess'))
+      const show = JSON.parse(localStorage.getItem('isLoggedIn'))
       if (show) {
         setMovieList(data)
       } else {
