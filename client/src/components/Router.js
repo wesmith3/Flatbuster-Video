@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Switch, Route } from "react-router-dom";
 import Cart from "./Cart";
 import Complaint from "./Complaint";
@@ -9,10 +10,11 @@ import Signup from "./Signup";
 import StockRequest from "./StockRequest";
 import Welcome from "./Welcome";
 
-function Router({ is_logged_in }) {
+function Router() {
+  const isLoggedIn = window.localStorage.getItem("isLoggedIn")
   return (
     <>
-      {is_logged_in ? (
+      {isLoggedIn ? (
         <Switch>
           <Route path="/my_cart" exact component={Cart} />
           <Route path="/complaints" exact component={Complaint} />

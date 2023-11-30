@@ -80,6 +80,16 @@ body {
   height: 100px;
 }
 
+.profile-table {
+  width: 90% !important;
+  margin: 2% auto !important;
+  border-collapse: collapse !important;
+  text-align: center !important;
+  /* background-color: #1030ad !important;
+  color: white !important; */
+  /* font-size:x-large !important; */
+  
+}
 
 .custom-cart-table {
   width: 65% !important;

@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { Menu, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-function MenuBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+function MenuBar(isLoggedIn) {
 
 
   return (
@@ -19,7 +18,7 @@ function MenuBar() {
               <Button color='yellow' as={Link} to='/my_account'>Account</Button>
             </Menu.Item>
             <Menu.Item>
-              <Button color='blue' as={Link} to='/signup'>Sign Out</Button>
+              <Button color='blue'>Sign Out</Button>
             </Menu.Item>
             </>
           ): (

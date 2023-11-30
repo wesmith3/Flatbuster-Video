@@ -33,6 +33,7 @@ const Login = () => {
       .then((data) => {
         setFormData(emptyState);
         window.localStorage.setItem("isLoggedIn", true);
+        console.log(data)
       })
       .catch((err) => alert(err)); //useNavigate
   };
