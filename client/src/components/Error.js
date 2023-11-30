@@ -1,12 +1,22 @@
-import React from "react";
-import { Image } from 'semantic-ui-react'
+import { useState, useEffect } from "react";
+import { Image } from 'semantic-ui-react';
 
 function Error() {
-  return(
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setKey((prevKey) => prevKey + 1);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return (
     <div className="error-image">
-      <Image src='././Error.jpeg' alt='error'></Image>
+      <Image key={key} src='././Error.gif' alt='error' />
     </div>
-  )
+  );
 }
 
 export default Error;

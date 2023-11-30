@@ -5,6 +5,10 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
   const [open, setOpen] = useState(false);
   const [isSoldOut, setIsSoldOut] = useState(stock === 0);
 
+  const addToCart = () => {
+    
+  }
+
   return (
     <div onClick={() => setOpen(true)}>
       <Card>
@@ -12,9 +16,10 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
         {isSoldOut && <div className="sold-out-overlay">OUT OF STOCK</div>}
       </Card>
       <Modal
-        className="movie_modal"
+        className="movie-modal"
         onClose={() => setOpen(false)}
         dimmed='show'
+        inverted
         dimmer='blurring'
         size='small'
         open={open}
@@ -42,7 +47,7 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='blue'>Add to Cart</Button>
+          <Button color='blue' onClick={addToCart}>Add to Cart</Button>
         </Modal.Actions>
       </Modal>
     </div>

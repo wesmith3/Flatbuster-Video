@@ -9,6 +9,7 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+const CartURL = "http://localhost:5555/users"
 
 const Signup = () => {
   const emptyState = {
@@ -28,7 +29,6 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
 
     fetch("http://localhost:5555/users", {
       method: "POST",
@@ -41,8 +41,9 @@ const Signup = () => {
       .then((data) => {
         setFormData(emptyState);
         window.localStorage.setItem("isLoggedIn", true);
+        window.localStorage.setItem("UserId", data.id)
       })
-      .catch((err) => alert(err)); //useNavigate
+      .catch((err) => alert(err));
   };
 
   return (

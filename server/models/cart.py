@@ -9,7 +9,6 @@ class Cart(db.Model, SerializerMixin):
     __tablename__='carts'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
 
 #relationship
 
@@ -18,7 +17,7 @@ class Cart(db.Model, SerializerMixin):
     movies = association_proxy('cart_movies', 'movie')
 #serialization
     # serialize_rules=('-user.cart','-movies.carts','-cart_movies.cart')
-    serialize_only = ('id','user_id', 'movie_id','cart_movies.id','movies.title')
+    serialize_only = ('id','user_id','cart_movies.id','movies.title')
     
     def __repr__(self):
         return f"<Cart {self.id} {self.user_id}>"
