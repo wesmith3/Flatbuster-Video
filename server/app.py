@@ -57,6 +57,23 @@ class Carts(Resource):
     
 api.add_resource(Carts, '/carts')
 
+class CartByID(Resource):
+    def get(self, id):
+        try:
+            cart = db.session.get(Cart, id)
+            if cart:
+                return make_response(cart.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Cart Not Found"}, 404
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+            
+api.add_resource(CartByID, '/carts/<int:id>')
+
 class CartByUserID(Resource):
     def get(self, user_id):
         try:
@@ -110,8 +127,6 @@ class CartByUserID(Resource):
             )
         
 api.add_resource(CartByUserID, '/users/<int:user_id>/my_cart')
-
-
 
 class CartMovies(Resource):
     def get(self):
@@ -198,7 +213,20 @@ class CartMovieByID(Resource):
         
 api.add_resource(CartMovieByID, '/cart_movies/<int:id>')
 
+class CartMoviesByCartID(Resource):
+    def get(self, cart_id):
+        try:
+            c_list = []
+            cart_movies = CartMovie.query.filter_by(cart_id=cart_id).all()
+            for c_m in cart_movies:
+                c_list.append(c_m.to_dict())
+                return make_response(c_list, 200)
+        except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
 
+api.add_resource(CartMoviesByCartID, '/carts/<int:cart_id>/my_cart')
 
 class Complaints(Resource):
     def get(self):

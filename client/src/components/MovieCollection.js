@@ -5,6 +5,8 @@ const URL = "http://localhost:5555/movies"
 
 function MovieCollection() {
   const [movieList, setMovieList] = useState([])
+  const [cartId, setCartId] = useState(0)
+  const userId = window.localStorage.getItem('UserId')
 
   useEffect(() => {
     fetch(URL)
@@ -13,10 +15,19 @@ function MovieCollection() {
     .catch(err => alert(err))
   }, []);
 
+  useEffect(() => {
+    fetch(`http://localhost:5555/users/${userId}/my_cart`)
+    .then(res => res.json())
+    .then(data => {
+      window.localStorage.setItem("cartId", data.id)
+      setCartId(data.id)
+    })
+  }, [userId]);
+
 
   const mappedMovies = movieList.map((movie, index) => (
     <Grid.Column key={index}>
-      <MovieCard class="movie_card" key={movie.id} {...movie} />
+      <MovieCard class="movie_card" key={movie.id} {...movie} cartId={cartId} />
       <br />
     </Grid.Column>
   ));

@@ -45,7 +45,8 @@ class Movie(db.Model, SerializerMixin):
         # 'stock_requests.user_id',
         # 'stock_requests.request_date',
         # 'stock_requests.status',
-        # 'cart_movies.cart_id'
+        'cart_movies.id',
+        'cart_movies.cart_id'
         )
     
     #Validations

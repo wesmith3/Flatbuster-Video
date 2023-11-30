@@ -9,7 +9,7 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
-const CartURL = "http://localhost:5555/users"
+
 
 const Signup = () => {
   const emptyState = {
@@ -29,7 +29,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     fetch("http://localhost:5555/users", {
       method: "POST",
       headers: {
@@ -38,13 +38,28 @@ const Signup = () => {
       body: JSON.stringify(formData),
     })
       .then((r) => r.json())
-      .then((data) => {
+      .then((userData) => {
+        // Assuming userData includes the user ID as userData.id
+        const userId = userData.id;
+  
+        // Create a cart for the new user
+        return fetch("http://localhost:5555/carts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId }),
+        });
+      })
+      .then((r) => r.json())
+      .then((cartData) => {
         setFormData(emptyState);
         window.localStorage.setItem("isLoggedIn", true);
-        window.localStorage.setItem("UserId", data.id)
+        window.localStorage.setItem("UserId", cartData.user_id);
       })
       .catch((err) => alert(err));
   };
+  
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">

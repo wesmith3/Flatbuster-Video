@@ -82,11 +82,12 @@ body {
 
 
 .custom-cart-table {
-  width: 80% !important;
+  width: 65% !important;
   margin: 2% auto !important;
   border-collapse: collapse !important;
   background-color: #1030ad !important;
   color: white !important;
+  font-size:x-large !important;
 }
 
 .custom-cart-table th,
@@ -98,7 +99,7 @@ body {
 
 .custom-cart-table th {
   background-color: #1030ad !important;
-  color: white !important;
+  color: #ffcc00 !important;
 }
 
 .custom-cart-table strong {
