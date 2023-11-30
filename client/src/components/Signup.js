@@ -9,6 +9,9 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+import * as SemanticUI from "semantic-ui-react";
+
+import ErrorSnackBar from "./ErrorSnackBar";
 
 
 const Signup = () => {
@@ -22,6 +25,24 @@ const Signup = () => {
     is_employee: false,
   };
   const [formData, setFormData] = useState(emptyState);
+  const [errors, setErrors] = useState([]);
+  const validateForm = () => {
+    const errorMessages = [];
+
+    // Regex to check for email
+    if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
+      errorMessages.push("Please enter a valid email address");
+    }
+    if (!formData.password || formData.password.length < 8) {
+      errorMessages.push("Password must be at least 8 characters long");
+    }
+
+    setErrors(errorMessages);
+
+    // If true, there are no validation errors
+    return errorMessages.length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -29,6 +50,8 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (validateForm()) {
+      console.log(formData);
   
     fetch("http://localhost:5555/users", {
       method: "POST",
@@ -57,6 +80,7 @@ const Signup = () => {
         window.localStorage.setItem("UserId", cartData.user_id);
       })
       .catch((err) => alert(err));
+
   };
   
 
@@ -77,7 +101,6 @@ const Signup = () => {
               name="first_name"
               onChange={handleChange}
             />
-
             <Form.Input
               fluid
               icon="user"
@@ -124,10 +147,10 @@ const Signup = () => {
               onChange={handleChange}
               name="password"
             />
-
-            <Button color="blue" fluid size="large">
+            <ErrorSnackBar errors={errors} />
+            <SemanticUI.Button color="blue" fluid size="large">
               Signup
-            </Button>
+            </SemanticUI.Button>
           </Segment>
         </Form>
         <Message>

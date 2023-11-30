@@ -19,8 +19,7 @@ function Router({ is_logged_in }) {
     <>
       {is_logged_in ? (
         <Switch>
-          <Route path="/my_cart" exact component={Cart} />
-          <Route path="/complaints" exact component={Complaint} />
+          <Route path="/carts" exact component={Cart} />
           <Route path="/login" exact render={() => <Login currentUser={currentUser}/>} />
           <Route path="/movies" exact render={() => <MovieCollection id={user.id}/>} />
           <Route path="/my_account" exact component={Profile} />
@@ -36,7 +35,7 @@ function Router({ is_logged_in }) {
           <Route path="*" component={Welcome} />
         </Switch>
       )}
-  </>
+    </>
   );
 }
 
