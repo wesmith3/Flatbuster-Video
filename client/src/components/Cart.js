@@ -2,41 +2,50 @@ import { useEffect, useState } from "react";
 import { Button, Table } from 'semantic-ui-react';
 
 function Cart() {
-  const [cartData, setCartData] = useState(null);
-  const [movieQuantities, setMovieQuantities] = useState({});
-  const cartId = window.localStorage.getItem("cartId");
+  const [cartData, setCartData] = useState(null);;
+  const cartId = JSON.parse(localStorage.getItem("cartId"));
 
   useEffect(() => {
     fetch(`http://localhost:5555/carts/${cartId}`)
       .then(res => res.json())
       .then(data => {
         setCartData(data);
-        console.log(data)
       })
       .catch((err) => alert(err));
   }, [cartId]);
 
-  const handleDelete = (movieId) => {
-    debugger
-    fetch(`http://localhost:5555/cart_movies/${movieId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cart_id: cartId,
-        movie_id: movieId,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to remove movie from cart");
+  const handleDelete = (title) => {
+    fetch("http://localhost:5555/cart_movies")
+      .then((res) => res.json())
+      .then((cartItems) => {
+        const cartItem = cartItems.find((item) => item.movie.title === title && item.cart_id === cartId);
+  
+        if (!cartItem) {
+          alert("This movie is not in your cart.");
+        } else {
+          const cartItemId = cartItem.id;
+  
+          fetch(`http://localhost:5555/cart_movies/${cartItemId}`, {
+            method: "DELETE",
+          })
+            .then((res) => {
+              if (res.ok) {
+                console.log("Item deleted successfully");
+                setCartData((prevCartData) => ({
+                  ...prevCartData,
+                  movies: prevCartData.movies.filter(movie => movie.title !== title),
+                }));
+              } else {
+                console.error("Error deleting item:", res.statusText);
+              }
+            })
+            .catch((err) => alert(err));
         }
-        console.log("Movie removed from cart successfully");
-        // You might want to update your UI or take additional actions upon successful removal
       })
       .catch((err) => alert(err));
   };
+  
+  
 
   return (
     <div>
@@ -51,18 +60,19 @@ function Cart() {
         <Table.Body>
           {cartData &&
             cartData.movies.map((movie, index) => {
-              const movieId = movie.movie_id;
+              const title = movie.title;
               return (
                 <Table.Row key={index}>
-                  <Table.Cell>{movie.title}</Table.Cell>
+                  <Table.Cell>{title}</Table.Cell>
                   <Table.Cell>
-                    <Button icon='trash' onClick={() => handleDelete(movieId)}></Button>
+                    <Button icon='trash' onClick={() => handleDelete(title)}></Button>
                   </Table.Cell>
                 </Table.Row>
               );
             })}
         </Table.Body>
       </Table>
+      <Button className="rental-btn">Start Rental</Button>
     </div>
   );
 }
