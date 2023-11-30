@@ -9,6 +9,7 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+import ErrorSnackBar from "./ErrorSnackBar";
 
 const Signup = () => {
   const emptyState = {
@@ -21,20 +22,20 @@ const Signup = () => {
     is_employee: false,
   };
   const [formData, setFormData] = useState(emptyState);
-
+  const [errors, setErrors] = useState({});
   const validateForm = () => {
     const newErrors = {};
-//!regex to check for email
+    //!regex to check for email
     if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
     if (!formData.password || formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters long";
     }
-    
+    <ErrorSnackBar errors={errors} />;
     setErrors(newErrors);
 
-//! If true, there are no validation error
+    //! If true, there are no validation error
     return Object.keys(newErrors).length === 0;
   };
   const handleChange = (e) => {
@@ -47,19 +48,20 @@ const Signup = () => {
     if (validateForm()) {
       console.log(formData);
 
-    fetch("http://localhost:5555/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        setFormData(emptyState);
-        window.localStorage.setItem("isLoggedIn", true);
+      fetch("http://localhost:5555/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       })
-      .catch((err) => alert(err)); //useNavigate
+        .then((r) => r.json())
+        .then((data) => {
+          setFormData(emptyState);
+          window.localStorage.setItem("isLoggedIn", true);
+        })
+        .catch((err) => alert(err)); //useNavigate
+    }
   };
 
   return (
