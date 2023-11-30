@@ -8,7 +8,7 @@ const URL = "http://localhost:5555/movies"
 function MovieCollection({ id }) {
   const [movieList, setMovieList] = useState([])
   const [cartId, setCartId] = useState(0)
-  const userId = window.localStorage.getItem('UserId')
+  const userId = JSON.parse(localStorage.getItem('UserId'))
   const history = useHistory()
   
   useEffect(() => {
@@ -30,7 +30,7 @@ function MovieCollection({ id }) {
     fetch(`http://localhost:5555/users/${userId}/my_cart`)
     .then(res => res.json())
     .then(data => {
-      window.localStorage.setItem("cartId", data.id)
+      localStorage.setItem("cartId", data.id)
       setCartId(data.id)
     })
   }, [userId]);

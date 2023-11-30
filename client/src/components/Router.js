@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Switch, Route } from "react-router-dom";
-import { useState } from 'react'
 import Cart from "./Cart";
 import Complaint from "./Complaint";
 import Error from "./Error";
@@ -18,7 +17,7 @@ function Router({ is_logged_in }) {
   
   return (
     <>
-      {isLoggedIn ? (
+      {is_logged_in ? (
         <Switch>
           <Route path="/my_cart" exact component={Cart} />
           <Route path="/complaints" exact component={Complaint} />

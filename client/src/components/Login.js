@@ -35,7 +35,9 @@ const Login = ({ currentUser }) => {
       .then((r) => r.json())
       .then((data) => {
         currentUser(data)
+        console.log(data)
         localStorage.setItem("isLoggedIn", true);
+        localStorage.setItem("UserId", data.id);
         localStorage.setItem("token", data["access_token"]);
         history.push('/movies')
       })
