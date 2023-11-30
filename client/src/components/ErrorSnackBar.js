@@ -1,15 +1,24 @@
-import Toast from "react-bootstrap/Toast";
+// import Toast from "react-bootstrap/Toast";
 
 function ErrorSnackBar({ errors }) {
+  console.log(errors);
+  if (!errors) {
+    return null;
+  }
   return (
-    <Toast>
-      <Toast.Header>
-        <img src="" className="rounded me-2" alt="" />
-        <strong className="me-auto">Error</strong>
-      </Toast.Header>
-      <Toast.Body>{errors}</Toast.Body>
-    </Toast>
+    <div className="field">
+      <div className="ui pointing label">
+        {errors.map((error, index) => (
+          <div key={index}>{error}</div>
+        ))}
+      </div>
+    </div>
   );
 }
 
 export default ErrorSnackBar;
+{
+  /* {errors.map((error, index) => (
+        <div key={index}>{error}</div>
+      ))} */
+}
