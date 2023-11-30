@@ -10,6 +10,7 @@ import {
   Segment,
 } from "semantic-ui-react";
 
+
 const Signup = () => {
   const emptyState = {
     first_name: "",
@@ -28,8 +29,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-
+  
     fetch("http://localhost:5555/users", {
       method: "POST",
       headers: {
@@ -38,12 +38,27 @@ const Signup = () => {
       body: JSON.stringify(formData),
     })
       .then((r) => r.json())
-      .then((data) => {
-        setFormData(emptyState);
-        window.localStorage.setItem("isLoggedIn", true);
+      .then((userData) => {
+        // Assuming userData includes the user ID as userData.id
+        const userId = userData.id;
+  
+        // Create a cart for the new user
+        return fetch("http://localhost:5555/carts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId }),
+        });
       })
-      .catch((err) => alert(err)); //useNavigate
+      .then((r) => r.json())
+      .then((cartData) => {
+        setFormData(emptyState);
+        window.localStorage.setItem("UserId", cartData.user_id);
+      })
+      .catch((err) => alert(err));
   };
+  
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">

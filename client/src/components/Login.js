@@ -35,7 +35,6 @@ const Login = ({ currentUser }) => {
       .then((r) => r.json())
       .then((data) => {
         currentUser(data)
-        setFormData(emptyState);
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("token", data["access_token"]);
         history.push('/movies')

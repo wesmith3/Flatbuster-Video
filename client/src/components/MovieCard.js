@@ -1,9 +1,35 @@
 import React, { useState } from "react";
 import { Card, Image, Modal, Button, Rating } from "semantic-ui-react";
 
-function MovieCard({ title, genre, release_year, stock, description, image, rating }) {
+function MovieCard({ id, title, genre, release_year, stock, description, image, rating, cartId }) {
   const [open, setOpen] = useState(false);
   const [isSoldOut, setIsSoldOut] = useState(stock === 0);
+
+  const addToCart = () => {
+    fetch("http://localhost:5555/cart_movies")
+      .then((res) => res.json())
+      .then((cartItems) => {
+        const isMovieInCart = cartItems.some((item) => item.movie_id === id && item.cart_id === cartId);
+        if (isMovieInCart) {
+          alert("This movie is already in your cart.");
+        } else {
+          fetch("http://localhost:5555/cart_movies", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              cart_id: cartId,
+              movie_id: id,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => alert(err));
+        }
+      })
+      .catch((err) => alert(err));
+  };
 
   return (
     <div onClick={() => setOpen(true)}>
@@ -12,7 +38,7 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
         {isSoldOut && <div className="sold-out-overlay">OUT OF STOCK</div>}
       </Card>
       <Modal
-        className="movie_modal"
+        className="movie-modal"
         onClose={() => setOpen(false)}
         dimmed='show'
         dimmer='blurring'
@@ -42,7 +68,7 @@ function MovieCard({ title, genre, release_year, stock, description, image, rati
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='blue'>Add to Cart</Button>
+          <Button color='blue' onClick={isSoldOut ? null : addToCart}>Add to Cart</Button>
         </Modal.Actions>
       </Modal>
     </div>

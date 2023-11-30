@@ -124,13 +124,12 @@ def create_complaints(users):
 def create_carts(users, movies):
     carts = []
     
-    for _ in range(5):
+    for _ in range(10):
         user_id = rc([user.id for user in users])
         while any(cart.user_id == user_id for cart in carts):
             user_id = rc([user.id for user in users])
         c = Cart(
             user_id=user_id,
-            movie_id=rc([movie.id for movie in movies]),
         )
         carts.append(c)
 
