@@ -808,6 +808,23 @@ def verify_jwt(id):
         return make_response(
             {"errors": [str(e)]}, 400
         )
+    
+@app.route('/user_rentals/<int:id>')
+def get_rentals(id):
+    try:
+        movies_rented = []
+        user = db.session.get(User, id).to_dict(rules=('-password',))
+        user_id = user['id']
+        rentals = Rental.query.filter(Rental.user_id==user_id)
+        for rental in rentals:
+            movie = db.session.get(Movie, rental.movie_id)
+            movies_rented.append(movie.to_dict())
+        user['rentals'] = movies_rented
+        return make_response(user, 200)
+    except (ValueError, AttributeError, TypeError) as e:
+        return make_response(
+            {"errors": [str(e)]}
+        )
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
