@@ -9,7 +9,6 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
     fetch("http://localhost:5555/cart_movies")
       .then((res) => res.json())
       .then((cartItems) => {
-        console.log(cartItems)
         const isMovieInCart = cartItems.some((item) => item.movie_id === id && item.cart_id === cartId);
         if (isMovieInCart) {
           alert("This movie is already in your cart.");

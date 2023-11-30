@@ -125,5 +125,6 @@ body {
   }
 
 .rental-btn {
-  margin-left: 75%;
+  width: 65% !important;
+  margin: 2% auto !important;
 }

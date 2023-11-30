@@ -72,7 +72,9 @@ function Cart() {
             })}
         </Table.Body>
       </Table>
-      <Button className="rental-btn">Start Rental</Button>
+      <div className="rental-btn">
+      <Button floated='right' color="blue">Start Rental</Button>
+      </div>
     </div>
   );
 }
