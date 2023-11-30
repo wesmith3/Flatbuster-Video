@@ -32,7 +32,7 @@ const Login = () => {
       .then((r) => r.json())
       .then((data) => {
         setFormData(emptyState);
-        window.localStorage.setItem("isLoggedIn", true);
+        window.localStorage.setItem("CartID", data.cart_id);
         console.log(data)
       })
       .catch((err) => alert(err)); //useNavigate

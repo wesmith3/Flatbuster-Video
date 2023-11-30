@@ -95,21 +95,21 @@ body {
   width: 65% !important;
   margin: 2% auto !important;
   border-collapse: collapse !important;
-  background-color: #1030ad !important;
-  color: white !important;
+  /* background-color: #1030ad !important;
+  color: white !important; */
   font-size:x-large !important;
 }
 
 .custom-cart-table th,
 .custom-cart-table td {
   padding: 1.5% !important;
-  border: 2px solid #ffcc00 !important;
+  /* border: 2px solid #ffcc00 !important; */
   text-align: center !important;
 }
 
 .custom-cart-table th {
-  background-color: #1030ad !important;
-  color: #ffcc00 !important;
+  /* background-color: #1030ad !important;
+  color: #ffcc00 !important; */
 }
 
 .custom-cart-table strong {

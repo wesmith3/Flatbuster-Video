@@ -11,7 +11,7 @@ import StockRequest from "./StockRequest";
 import Welcome from "./Welcome";
 
 function Router() {
-  const isLoggedIn = window.localStorage.getItem("isLoggedIn")
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
   return (
     <>
       {isLoggedIn ? (

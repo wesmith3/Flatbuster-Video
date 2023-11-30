@@ -54,7 +54,6 @@ const Signup = () => {
       .then((r) => r.json())
       .then((cartData) => {
         setFormData(emptyState);
-        window.localStorage.setItem("isLoggedIn", true);
         window.localStorage.setItem("UserId", cartData.user_id);
       })
       .catch((err) => alert(err));
