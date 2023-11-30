@@ -21,6 +21,22 @@ const Signup = () => {
     is_employee: false,
   };
   const [formData, setFormData] = useState(emptyState);
+
+  const validateForm = () => {
+    const newErrors = {};
+//!regex to check for email
+    if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    if (!formData.password || formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters long";
+    }
+    
+    setErrors(newErrors);
+
+//! If true, there are no validation error
+    return Object.keys(newErrors).length === 0;
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -28,7 +44,8 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (validateForm()) {
+      console.log(formData);
 
     fetch("http://localhost:5555/users", {
       method: "POST",
