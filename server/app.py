@@ -15,7 +15,7 @@ from flask_restful import Resource
 import json
 
 # Local imports
-from config import app, db, api, flask_bcrypt
+from config import app, db, api, flask_bcrypt, create_access_token
 # Add your model imports
 
 
@@ -739,13 +739,42 @@ api.add_resource(UserByID, '/users/<int:id>')
 def login():
     try:
         data = json.loads(request.data)
-        user = User.query.filter_by(email=data["email"]).first().to_dict(only=('email', 'password'))
-        user_pw_hash = user["password"]
-        data_pw = data["password"]
-        access = flask_bcrypt.check_password_hash(user_pw_hash, data_pw)
-        response = {
-            "access": access
-        }
+        user = User.query.filter_by(email=data["email"]).first()
+        if user:
+            data_pw = data["password"]
+            access = user.verify(data_pw)
+            if access:
+                access_token = create_access_token(identity=user.id)
+                user.jwt = access_token
+                db.session.add(user)
+                db.session.commit()
+                response = user.to_dict(rules=('-password',))
+                response['access_token'] = access_token
+        else:
+            response = {
+                "access_token": ""
+            }
+        return make_response(response, 200)
+        
+    except (ValueError, AttributeError, TypeError) as e:
+        return make_response(
+            {"errors": [str(e)]}, 400
+        )
+
+@app.route('/verify/jwt/<int:id>', methods=["GET"])
+def verify_jwt(id):
+    try:
+        data = request.headers["Authorization"]
+        user = db.session.get(User, id)
+        if user:
+            access = user.verify_jwt(data)
+            response = {
+                "access": access
+            }
+        else:
+            response = {
+                "access": False
+            }
         return make_response(response, 200)
         
     except (ValueError, AttributeError, TypeError) as e:
