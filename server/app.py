@@ -15,7 +15,7 @@ from flask_restful import Resource
 import json
 
 # Local imports
-from config import app, db, api, flask_bcrypt
+from config import app, db, api, flask_bcrypt, create_access_token
 # Add your model imports
 
 
@@ -71,10 +71,27 @@ class CartByID(Resource):
             return make_response(
                 {"errors": [str(e)]}, 400
             )
-    
-    def patch(self, id):
+            
+api.add_resource(CartByID, '/carts/<int:id>')
+
+class CartByUserID(Resource):
+    def get(self, user_id):
         try:
-            cart = db.session.get(Cart, id)
+            cart = Cart.query.filter_by(user_id=user_id).first()
+            if cart:
+                return make_response(cart.to_dict(), 200)
+            else:
+                return make_response(
+                    {"errors": "Cart Not Found"}, 404
+                )
+        except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
+    
+    def patch(self, user_id):
+        try:
+            cart = db.session.get(Cart, user_id)
             if cart:
                 data = json.loads(request.data)
                 for attr in data:
@@ -92,9 +109,9 @@ class CartByID(Resource):
                 {"errors": [str(e)]}, 400
             )
     
-    def delete(self,id):
+    def delete(self,user_id):
         try:
-            cart = db.session.get(Cart, id)
+            cart = db.session.get(Cart, user_id)
             if cart:
                 db.session.delete(cart)
                 db.session.commit()
@@ -109,9 +126,7 @@ class CartByID(Resource):
                 {"errors": [str(e)]}, 400
             )
         
-api.add_resource(CartByID, '/carts/<int:id>')
-
-
+api.add_resource(CartByUserID, '/users/<int:user_id>/my_cart')
 
 class CartMovies(Resource):
     def get(self):
@@ -198,7 +213,20 @@ class CartMovieByID(Resource):
         
 api.add_resource(CartMovieByID, '/cart_movies/<int:id>')
 
+class CartMoviesByCartID(Resource):
+    def get(self, cart_id):
+        try:
+            c_list = []
+            cart_movies = CartMovie.query.filter_by(cart_id=cart_id).all()
+            for c_m in cart_movies:
+                c_list.append(c_m.to_dict())
+                return make_response(c_list, 200)
+        except (ValueError, AttributeError, TypeError) as e:
+            return make_response(
+                {"errors": [str(e)]}, 400
+            )
 
+api.add_resource(CartMoviesByCartID, '/carts/<int:cart_id>/my_cart')
 
 class Complaints(Resource):
     def get(self):
@@ -660,7 +688,6 @@ class Users(Resource):
         try:
             data = json.loads(request.data)
             pw_hash = flask_bcrypt.generate_password_hash(data["password"])
-            print(pw_hash)
             new_user = User(
                 first_name = data["first_name"],
                 last_name = data["last_name"],
@@ -739,13 +766,42 @@ api.add_resource(UserByID, '/users/<int:id>')
 def login():
     try:
         data = json.loads(request.data)
-        user = User.query.filter_by(email=data["email"]).first().to_dict(only=('email', 'password'))
-        user_pw_hash = user["password"]
-        data_pw = data["password"]
-        access = flask_bcrypt.check_password_hash(user_pw_hash, data_pw)
-        response = {
-            "access": access
-        }
+        user = User.query.filter_by(email=data["email"]).first()
+        if user:
+            data_pw = data["password"]
+            access = user.verify(data_pw)
+            if access:
+                access_token = create_access_token(identity=user.id)
+                user.jwt = access_token
+                db.session.add(user)
+                db.session.commit()
+                response = user.to_dict(rules=('-password',))
+                response['access_token'] = access_token
+        else:
+            response = {
+                "access_token": ""
+            }
+        return make_response(response, 200)
+        
+    except (ValueError, AttributeError, TypeError) as e:
+        return make_response(
+            {"errors": [str(e)]}, 400
+        )
+
+@app.route('/verify/jwt/<int:id>', methods=["GET"])
+def verify_jwt(id):
+    try:
+        data = request.headers["Authorization"]
+        user = db.session.get(User, id)
+        if user:
+            access = user.verify_jwt(data)
+            response = {
+                "access": access
+            }
+        else:
+            response = {
+                "access": False
+            }
         return make_response(response, 200)
         
     except (ValueError, AttributeError, TypeError) as e:

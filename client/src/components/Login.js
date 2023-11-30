@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   Form,
@@ -10,12 +11,14 @@ import {
   Segment,
 } from "semantic-ui-react";
 
-const Login = () => {
+const Login = ({ currentUser }) => {
   const emptyState = {
     email: "",
     password: "",
   };
   const [formData, setFormData] = useState(emptyState);
+  const history = useHistory()
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -31,8 +34,12 @@ const Login = () => {
     })
       .then((r) => r.json())
       .then((data) => {
-        setFormData(emptyState);
-        window.localStorage.setItem("isLoggedIn", true);
+        currentUser(data)
+        console.log(data)
+        localStorage.setItem("isLoggedIn", true);
+        localStorage.setItem("UserId", data.id);
+        localStorage.setItem("token", data["access_token"]);
+        history.push('/movies')
       })
       .catch((err) => alert(err)); //useNavigate
   };

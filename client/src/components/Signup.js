@@ -13,6 +13,7 @@ import * as SemanticUI from "semantic-ui-react";
 
 import ErrorSnackBar from "./ErrorSnackBar";
 
+
 const Signup = () => {
   const emptyState = {
     first_name: "",
@@ -51,22 +52,37 @@ const Signup = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log(formData);
-
-      fetch("http://localhost:5555/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+  
+    fetch("http://localhost:5555/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => r.json())
+      .then((userData) => {
+        // Assuming userData includes the user ID as userData.id
+        const userId = userData.id;
+  
+        // Create a cart for the new user
+        return fetch("http://localhost:5555/carts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId }),
+        });
       })
-        .then((r) => r.json())
-        .then((data) => {
-          setFormData(emptyState);
-          window.localStorage.setItem("isLoggedIn", true);
-        })
-        .catch((err) => alert(err)); //useNavigate
-    }
+      .then((r) => r.json())
+      .then((cartData) => {
+        setFormData(emptyState);
+        window.localStorage.setItem("UserId", cartData.user_id);
+      })
+      .catch((err) => alert(err));
+
   };
+  
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
