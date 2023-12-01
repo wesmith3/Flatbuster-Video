@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Button, Table, Modal, Form, Icon } from 'semantic-ui-react'
+import { Button, Table, Modal, Form, Icon, Confirm } from 'semantic-ui-react'
+import { useHistory } from "react-router-dom";
 
 function Profile() {
   const emptyState = {
@@ -11,9 +12,10 @@ function Profile() {
     "created_at": "",
     "rentals": [],
   }
-  
+  const history = useHistory()
   const [rentalData, setRentalData] = useState(emptyState)
   const [open, setOpen] = useState(false)
+  const [confirm, setConfirm] = useState(false)
   
   useEffect(() => {
     const id = localStorage.getItem('UserId')
@@ -67,6 +69,28 @@ function Profile() {
     const { name, value } = e.target;
     setAcctInfo({ ...acctInfo, [name]: value });
   };
+
+  const confirmBtn = () => {
+    setConfirm(previousState => !previousState)
+  }
+
+
+  const deleteUser = () => {
+    const id = localStorage.getItem('UserId');
+
+    fetch(`/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          console.log('User deleted successfully')
+          history.push("/")
+  }
+})
+  }
   
   
   return (
@@ -95,10 +119,14 @@ function Profile() {
       </Table.Body>
     </Table>
     <div className="act-btn">
-    <Button floated="right" color="red">
-      <Icon name='edit' />
-      Delete Account
-      </Button>
+      <Button onClick={confirmBtn} floated='right' color="red">Delete Account</Button>
+         <Confirm
+           open={confirm}
+           size="mini"
+           content="Are you sure you want to delete account?"
+           onCancel={confirmBtn}
+           onConfirm={deleteUser}
+       />
     <Button floated='right' onClick={() => setOpen(true)}>
       Edit Account
       </Button>
@@ -200,5 +228,6 @@ function Profile() {
 
   )
 }
+
 
 export default Profile;
