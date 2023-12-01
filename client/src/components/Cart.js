@@ -6,13 +6,25 @@ import verifyJWT from "./Authorize";
 
 function Cart() {
   const [cartData, setCartData] = useState(null);;
-  const cartId = JSON.parse(localStorage.getItem("cartId"));
-  const UserId = JSON.parse(localStorage.getItem("UserId"));
+  const cartId = JSON.parse(localStorage.getItem("cartId")) || 0;
+  const UserId = JSON.parse(localStorage.getItem("UserId")) || 0;
   const jwt = localStorage.getItem('token')
   const history = useHistory()
   verifyJWT(jwt, UserId)
 
+  const checkLogin = () => {
+    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
+    if (!show) {
+      localStorage.clear()
+      history.push('/')
+      return
+    }
+  }
+  
   useEffect(() => {
+
+    checkLogin()
+    
     fetch(`http://localhost:5555/carts/${cartId}`)
       .then(res => res.json())
       .then(data => {
@@ -27,12 +39,10 @@ function Cart() {
       .catch((err) => alert(err));
   }, [cartId]);
 
+  checkLogin()
+
   const handleDelete = (title) => {
-    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
-      if (!show) {
-        localStorage.clear()
-        history.push('/')
-      }
+    checkLogin()
     fetch("http://localhost:5555/cart_movies")
       .then((res) => res.json())
       .then((cartItems) => {
@@ -65,11 +75,7 @@ function Cart() {
   
   const handleMakeRental = () => {
 
-    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
-    if (!show) {
-      localStorage.clear()
-      history.push('/')
-    }
+    checkLogin()
 
     if (!cartData || cartData.movies.length === 0) {
       alert("Your cart is empty. Add movies before starting a rental.");
@@ -117,7 +123,7 @@ function Cart() {
         .catch((err) => alert(err))
       history.push("/my_account")
     };
-  
+    
 
   return (
     <div>

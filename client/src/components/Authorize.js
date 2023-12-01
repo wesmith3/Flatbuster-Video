@@ -1,7 +1,9 @@
 const URL = "http://localhost:5555/verify/jwt"
 
 function verifyJWT(jwt, id) {
-
+    if (!jwt || !id) {
+      localStorage.clear()
+    }
     fetch(`${URL}/${id}`, {
         method: 'GET',
         headers: {

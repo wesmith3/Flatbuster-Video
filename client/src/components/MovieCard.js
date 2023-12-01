@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom"
 import { Card, Image, Modal, Button, Rating, Message } from "semantic-ui-react";
+import verifyJWT from "./Authorize"
 
 
 
@@ -8,11 +10,22 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
   const [open, setOpen] = useState(false);
   const [added, setAdded] = useState(false);
   const [isSoldOut, setIsSoldOut] = useState(true);
+  const UserId = JSON.parse(localStorage.getItem("UserId")) || 0;
+  const jwt = localStorage.getItem('token')
+  const history = useHistory()
+  verifyJWT(jwt, UserId)
   useEffect(() => {
     stock === 0 ? setIsSoldOut(true) : setIsSoldOut(false)
   }, [stock])
 
   const addToCart = () => {
+    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
+    if (!show) {
+      alert("Not valid login creditials!")
+      localStorage.clear()
+      history.push('/')
+      return
+    }
     fetch("http://localhost:5555/cart_movies")
       .then((res) => res.json())
       .then((cartItems) => {
@@ -38,11 +51,23 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
       .catch((err) => alert(err));
   };
 
+  const showModal = () => {
+    verifyJWT(jwt, UserId)
+    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
+    if (!show) {
+      alert("Not valid login creditials!")
+      localStorage.clear()
+      history.push('/')
+      return
+    }
+    setOpen(true)
+  }
+
   const color = isSoldOut ? "red" : "blue"
   const btnText = isSoldOut ? "Not In Stock" : "Add to Cart"
 
   return (
-    <div onClick={() => setOpen(true)}>
+    <div onClick={() => showModal()}>
       <Card>
         <Image
           src={image}
@@ -86,7 +111,7 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='blue' onClick={isSoldOut ? null : addToCart}>Add to Cart</Button>
+          <Button color={color} onClick={isSoldOut ? null : addToCart}>{btnText}</Button>
           <Message hidden positive>
                 <Message.Header>You are eligible for a reward</Message.Header>
                   <p>
