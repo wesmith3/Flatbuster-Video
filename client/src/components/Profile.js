@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Button, Table, Modal, Form } from 'semantic-ui-react'
+import { useHistory } from "react-router-dom";
+import verifyJWT from "./Authorize";
 
 function Profile() {
   const emptyState = {
@@ -14,9 +16,23 @@ function Profile() {
   
   const [rentalData, setRentalData] = useState(emptyState)
   const [open, setOpen] = useState(false)
+  const UserId = JSON.parse(localStorage.getItem("UserId")) || 0;
+  const jwt = localStorage.getItem('token')
+  const history = useHistory()
+  verifyJWT(jwt, UserId)
+
+  const checkLogin = () => {
+    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
+    if (!show) {
+      localStorage.clear()
+      history.push('/')
+      return
+    }
+  }
   
   useEffect(() => {
-    const id = localStorage.getItem('UserId')
+    checkLogin()
+    const id = localStorage.getItem('UserId') || 0;
     fetch(`/user_rentals/${id}`)
     .then(res => res.json())
     .then(data => {
@@ -24,6 +40,8 @@ function Profile() {
     })
     .catch(err => alert(err))
   }, [])
+
+  checkLogin()
   
   const myInfo = {
     "first_name": rentalData.first_name,
@@ -35,8 +53,10 @@ function Profile() {
 
   const [acctInfo, setAcctInfo] = useState(myInfo)
 
-  const handleSubmit = () => {
-    const id = localStorage.getItem('UserId');
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    checkLogin()
+    const id = localStorage.getItem('UserId') || 0;
     
     const updatedAcctInfo = {};
    
@@ -46,7 +66,7 @@ function Profile() {
         updatedAcctInfo[field] = acctInfo[field];
       }
     });
-  console.log(updatedAcctInfo)
+    console.log(updatedAcctInfo)
     fetch(`/users/${id}`, {
       method: 'PATCH',
       headers: {
@@ -64,6 +84,7 @@ function Profile() {
   };
 
   const handleChange = (e) => {
+    checkLogin()
     const { name, value } = e.target;
     setAcctInfo({ ...acctInfo, [name]: value });
   };

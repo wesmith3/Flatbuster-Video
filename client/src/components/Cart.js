@@ -1,23 +1,48 @@
 import { useEffect, useState } from "react";
 import { Button, Table } from 'semantic-ui-react';
 import { useHistory } from "react-router-dom";
+import verifyJWT from "./Authorize";
 
 
 function Cart() {
   const [cartData, setCartData] = useState(null);;
-  const cartId = JSON.parse(localStorage.getItem("cartId"));
+  const cartId = JSON.parse(localStorage.getItem("cartId")) || 0;
+  const UserId = JSON.parse(localStorage.getItem("UserId")) || 0;
+  const jwt = localStorage.getItem('token')
   const history = useHistory()
+  verifyJWT(jwt, UserId)
 
+  const checkLogin = () => {
+    const show = JSON.parse(localStorage.getItem('isLoggedIn'))
+    if (!show) {
+      localStorage.clear()
+      history.push('/')
+      return
+    }
+  }
+  
   useEffect(() => {
+
+    checkLogin()
+    
     fetch(`http://localhost:5555/carts/${cartId}`)
       .then(res => res.json())
       .then(data => {
-        setCartData(data);
+        const show = JSON.parse(localStorage.getItem('isLoggedIn'))
+        if (show) {
+          setCartData(data)
+        } else {
+          localStorage.clear()
+          history.push('/')
+        }
       })
       .catch((err) => alert(err));
   }, [cartId]);
 
+  checkLogin()
+
   const handleDelete = (title) => {
+    checkLogin()
     fetch("http://localhost:5555/cart_movies")
       .then((res) => res.json())
       .then((cartItems) => {
@@ -49,12 +74,16 @@ function Cart() {
   };
   
   const handleMakeRental = () => {
+
+    checkLogin()
+
     if (!cartData || cartData.movies.length === 0) {
       alert("Your cart is empty. Add movies before starting a rental.");
       return;
     }
 
     const movieIds = cartData.cart_movies.map((cart_movie) => cart_movie.movie_id);
+
 
       fetch("http://localhost:5555/rentals", {
         method: "POST",
@@ -94,7 +123,7 @@ function Cart() {
         .catch((err) => alert(err))
       history.push("/my_account")
     };
-  
+    
 
   return (
     <div>
