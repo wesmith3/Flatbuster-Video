@@ -9,8 +9,8 @@ class Rental(db.Model, SerializerMixin):
     __tablename__="rentals"
     
     id = db.Column(db.Integer, primary_key = True)
-    rental_date = db.Column(db.DateTime, nullable=False)
-    return_date = db.Column(db.DateTime, nullable=False)
+    rental_date = db.Column(db.Date, nullable=False)
+    return_date = db.Column(db.Date, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
     

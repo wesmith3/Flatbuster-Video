@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Button, Table, Modal, Form } from 'semantic-ui-react'
+import { Button, Table, Modal, Form, Icon } from 'semantic-ui-react'
 
 function Profile() {
   const emptyState = {
@@ -95,8 +95,13 @@ function Profile() {
       </Table.Body>
     </Table>
     <div className="act-btn">
-    <Button floated="right" icon='edit' color="red">Delete Account</Button>
-    <Button floated='right' icon='edit' onClick={() => setOpen(true)}>Edit Account</Button>
+    <Button floated="right" color="red">
+      <Icon name='edit' />
+      Delete Account
+      </Button>
+    <Button floated='right' onClick={() => setOpen(true)}>
+      Edit Account
+      </Button>
     </div>
     <br />
     <h1 className="cart-header">MY RENTALS</h1>
@@ -112,8 +117,8 @@ function Profile() {
        {rentalData.rentals.map((each, idx) => {
         return <Table.Row key={`key-${idx}-${each.id}`}>
               <Table.Cell>{each.title}</Table.Cell>
-              <Table.Cell>09/14/2023</Table.Cell>
-              <Table.Cell>09/21/2023</Table.Cell>
+              <Table.Cell>12/01/2023</Table.Cell>
+              <Table.Cell>12/08/2023</Table.Cell>
             </Table.Row>
         })}
       </Table.Body>

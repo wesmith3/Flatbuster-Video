@@ -34,7 +34,6 @@ const Login = ({ currentUser }) => {
     })
       .then((r) => r.json())
       .then((data) => {
-        debugger
         currentUser(data)
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("UserId", data.id);

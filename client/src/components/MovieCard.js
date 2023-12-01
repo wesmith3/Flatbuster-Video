@@ -31,7 +31,10 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
             }),
           })
             .then((res) => res.json())
-            .then(() => setAdded(true))
+            .then(() => {
+              setAdded(true)
+              setOpen(false)
+            })
             .catch((err) => alert(err));
         }
       })

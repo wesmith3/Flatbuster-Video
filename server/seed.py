@@ -5,10 +5,11 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+from datetime import datetime, timedelta
 
 # Local imports
 from config import app, db, flask_bcrypt
-# from app_setup import db
+# from app_setup import db,
 from models.user import User
 from models.rental import Rental
 from models.movie import Movie
@@ -60,10 +61,14 @@ def create_movies():
 
 def create_rentals(users, movies):
     rentals = []
-    for _ in range(20):
+    for _ in range(50):
+        rental_str = fake.date()
+        rental_date = datetime.strptime(rental_str, '%Y-%m-%d')
+        return_date = rental_date + timedelta(days=7)
+        
         r = Rental(
-            rental_date=fake.date_time(),
-            return_date=fake.future_date(),
+            rental_date=rental_date,
+            return_date=return_date,
             user_id=rc([user.id for user in users]),
             movie_id=rc([movie.id for movie in movies])
         )
