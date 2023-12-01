@@ -1,6 +1,7 @@
 # Phase 4 Full-Stack Application Project Template
 
 ## Learning Goals
+<img width="967" alt="Flabuster_ERD" src="https://github.com/wesmith3/Flatbuster-Video/assets/124002265/9187e965-d489-44b9-bdd7-5893a28afbc9">
 
 - Discuss the basic directory structure of a full-stack Flask/React application.
 - Carry out the first steps in creating your Phase 4 project.
@@ -8,7 +9,7 @@
 ---
 
 ## Introduction
-https://cdn.discordapp.com/attachments/1176657146805489777/1180211798213927002/Flabuster_ERD.png?ex=657c98e3&is=656a23e3&hm=59fd79c3008755cfd0d7be4290bd9a88361069e1749a1512f981f73b7e9deb21&
+
 Fork and clone this lesson for a template for your full-stack application. Take
 a look at the directory structure before we begin (NOTE: node_modules will be
 generated in a subsequent step):
