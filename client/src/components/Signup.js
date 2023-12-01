@@ -9,10 +9,8 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
-import * as SemanticUI from "semantic-ui-react";
 
-import ErrorSnackBar from "./ErrorSnackBar";
-
+import ErrorSnackBar from "./FormikErrorSnackbar";
 
 const Signup = () => {
   const emptyState = {
@@ -26,20 +24,35 @@ const Signup = () => {
   };
   const [formData, setFormData] = useState(emptyState);
   const [errors, setErrors] = useState([]);
+
   const validateForm = () => {
     const errorMessages = [];
 
-    // Regex to check for email
+    if (!formData.first_name || formData.first_name.trim() === "") {
+      errorMessages.push("Please enter your first name");
+    }
+
+    if (!formData.last_name || formData.last_name.trim() === "") {
+      errorMessages.push("Please enter your last name");
+    }
     if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
       errorMessages.push("Please enter a valid email address");
+    }
+    if (
+      !formData.phone_number ||
+      !/^\+?[0-9]+(?:,[0-9]+)*$/.test(formData.phone_number)
+    ) {
+      errorMessages.push("Please enter a valid phone number");
+    }
+
+    if (!formData.address || formData.address.trim() === "") {
+      errorMessages.push("Please enter your address");
     }
     if (!formData.password || formData.password.length < 8) {
       errorMessages.push("Password must be at least 8 characters long");
     }
-
     setErrors(errorMessages);
 
-    // If true, there are no validation errors
     return errorMessages.length === 0;
   };
 
@@ -50,9 +63,9 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log(formData);
-  
+    if (!validateForm()) {
+      return;
+    }
     fetch("http://localhost:5555/users", {
       method: "POST",
       headers: {
@@ -64,7 +77,7 @@ const Signup = () => {
       .then((userData) => {
         // Assuming userData includes the user ID as userData.id
         const userId = userData.id;
-  
+
         // Create a cart for the new user
         return fetch("http://localhost:5555/carts", {
           method: "POST",
@@ -80,9 +93,7 @@ const Signup = () => {
         window.localStorage.setItem("UserId", cartData.user_id);
       })
       .catch((err) => alert(err));
-
   };
-  
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
@@ -148,9 +159,9 @@ const Signup = () => {
               name="password"
             />
             <ErrorSnackBar errors={errors} />
-            <SemanticUI.Button color="blue" fluid size="large">
+            <Button color="blue" fluid size="large">
               Signup
-            </SemanticUI.Button>
+            </Button>
           </Segment>
         </Form>
         <Message>
@@ -158,8 +169,7 @@ const Signup = () => {
         </Message>
       </Grid.Column>
     </Grid>
-  );
-};
-}
-
+    );
+  };
+ }
 export default Signup;

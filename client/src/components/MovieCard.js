@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Image, Modal, Button, Rating } from "semantic-ui-react";
 
 
@@ -6,7 +6,10 @@ import { Card, Image, Modal, Button, Rating } from "semantic-ui-react";
 function MovieCard({ id, title, genre, release_year, stock, description, image, rating, cartId }) {
 
   const [open, setOpen] = useState(false);
-  const [isSoldOut, setIsSoldOut] = useState(stock === 0);
+  const [isSoldOut, setIsSoldOut] = useState(true);
+  useEffect(() => {
+    stock === 0 ? setIsSoldOut(true) : setIsSoldOut(false)
+  }, [stock])
 
   const addToCart = () => {
     fetch("http://localhost:5555/cart_movies")
@@ -27,12 +30,15 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
             }),
           })
             .then((res) => res.json())
-            .then((data) => console.log(data))
+            .then(() => alert("Movie successfully added to cart!"))
             .catch((err) => alert(err));
         }
       })
       .catch((err) => alert(err));
   };
+
+  const color = isSoldOut ? "red" : "blue"
+  const btnText = isSoldOut ? "Not In Stock" : "Add to Cart"
 
   return (
     <div onClick={() => setOpen(true)}>
