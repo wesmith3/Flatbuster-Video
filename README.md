@@ -10,7 +10,7 @@
 
 ## Introduction
 
-
+Welcome to the dazzling world of Flatbuster Video, where movies are not just a watch, but a whole experience!  Get set for an awesome rollercoaster ride of action, drama, and all-around good vibes. Toss some popcorn in the microwave, kick back, and let Flatbuster Video whisk you away to a world where every scene is epic and every moment is pure entertainment. 
 
 Fork and clone this lesson for a template for your full-stack application. Take
 a look at the directory structure before we begin (NOTE: node_modules will be
