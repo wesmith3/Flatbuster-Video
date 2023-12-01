@@ -34,11 +34,17 @@ const Login = ({ currentUser }) => {
     })
       .then((r) => r.json())
       .then((data) => {
-        currentUser(data)
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("UserId", data.id);
-        localStorage.setItem("token", data["access_token"]);
-        history.push('/movies')
+        // debugger
+        if (data["id"]) {
+          currentUser(data)
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("UserId", data.id);
+          localStorage.setItem("token", data["access_token"]);
+          history.push('/movies')
+        } else {
+          alert("Not valid login creditials!")
+          localStorage.clear()
+        }
       })
       .catch((err) => alert(err)); //useNavigate
   };

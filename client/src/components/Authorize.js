@@ -1,7 +1,9 @@
 const URL = "http://localhost:5555/verify/jwt"
 
 function verifyJWT(jwt, id) {
-
+    if (!jwt || !id) {
+      localStorage.clear()
+    }
     fetch(`${URL}/${id}`, {
         method: 'GET',
         headers: {
@@ -11,7 +13,7 @@ function verifyJWT(jwt, id) {
       })
       .then(res => res.json())
       .then(data => {
-        localStorage.setItem('grantAccess', data['access'])
+        localStorage.setItem('isLoggedIn', data['access'])
       })
       .catch(err => alert(err))
     

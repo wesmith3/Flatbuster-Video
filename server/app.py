@@ -43,7 +43,9 @@ class Carts(Resource):
     
     def post(self):
         try:
+
             data = json.loads(request.data)
+            
             new_cart = Cart(
                 user_id = data["user_id"]
             )
@@ -694,17 +696,20 @@ class Users(Resource):
     def post(self):
         try:
             data = json.loads(request.data)
+            
             pw_hash = flask_bcrypt.generate_password_hash(data["password"])
+            
             new_user = User(
                 first_name = data["first_name"],
                 last_name = data["last_name"],
                 email = data["email"],
-                password = pw_hash,
+                _password = pw_hash,
                 phone_number = data["phone_number"],
                 address = data["address"],
                 is_employee = data["is_employee"],
                 created_at = data["created_at"]
             )
+
             db.session.add(new_user)
             db.session.commit()
             return make_response(new_user.to_dict(rules=("-password",)), 201)
