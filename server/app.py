@@ -13,6 +13,7 @@ from models.cartmovie import CartMovie
 from flask import request, Flask, make_response
 from flask_restful import Resource
 import json
+from datetime import datetime, timedelta
 
 # Local imports
 from config import app, db, api, flask_bcrypt, create_access_token
@@ -62,7 +63,7 @@ class CartByID(Resource):
         try:
             cart = db.session.get(Cart, id)
             if cart:
-                return make_response(cart.to_dict(), 200)
+                return make_response(cart.to_dict(rules=("cart_movies.id", "cart_movies.cart_id", "cart_movies.movie_id")), 200)
             else:
                 return make_response(
                     {"errors": "Cart Not Found"}, 404
@@ -420,15 +421,21 @@ class Rentals(Resource):
     def post(self):
         try:
             data = json.loads(request.data)
-            new_rental = Rental(
-                rental_date = data["rental_date"],
-                return_date = data["return_date"],
-                user_id = data["user_id"],
-                movie_id = data["movie_id"]
-            )
-            db.session.add(new_rental)
-            db.session.commit()
-            return make_response(new_rental.to_dict(), 201)
+            new_rentals = []
+            for movie_id in data['movie_ids']:
+                rental_date = datetime.now()
+                return_date = rental_date + timedelta(days=7)
+
+                new_rental = Rental(
+                    rental_date=rental_date,
+                    return_date=return_date,
+                    user_id=data["user_id"],
+                    movie_id=movie_id
+                )
+                db.session.add(new_rental)
+                db.session.commit()
+                new_rentals.append(new_rental.to_dict())
+            return make_response(new_rentals, 201)
         except (ValueError, AttributeError, TypeError) as e:
             db.session.rollback()
             return make_response(
