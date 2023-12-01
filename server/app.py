@@ -744,7 +744,13 @@ class UserByID(Resource):
                     setattr(user, attr, data[attr])
                 db.session.add(user)
                 db.session.commit()
-                return make_response(user.to_dict(), 200)
+                r_list = []
+                rentals = Rental.query.filter(Rental.user_id==user.id)
+                for rental in rentals:
+                    r_list.append(db.session.get(Movie, rental.movie_id).to_dict())
+                user = user.to_dict(rules=("-password",))
+                user["rentals"] = r_list
+                return make_response(user, 200)
             else:
                 return make_response(
                     {"errors": "Update unsuccessful"}, 400
