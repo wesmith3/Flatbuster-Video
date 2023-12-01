@@ -18,6 +18,7 @@ class User(db.Model, SerializerMixin):
     phone_number = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
     is_employee = db.Column(db.Boolean, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
     jwt = db.Column(db.String)
 
     @hybrid_property

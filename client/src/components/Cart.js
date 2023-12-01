@@ -97,7 +97,6 @@ function Cart() {
       })
         .then((res) => {
           if (res.ok) {
-            console.log("Rental started successfully");
             setCartData(null);
 
             const movieIds = cartData.cart_movies.map((cart_movie) => cart_movie.id);

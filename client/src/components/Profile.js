@@ -13,9 +13,10 @@ function Profile() {
     "created_at": "",
     "rentals": [],
   }
-  
+  const history = useHistory()
   const [rentalData, setRentalData] = useState(emptyState)
   const [open, setOpen] = useState(false)
+  const [confirm, setConfirm] = useState(false)
   const UserId = JSON.parse(localStorage.getItem("UserId")) || 0;
   const jwt = localStorage.getItem('token')
   const history = useHistory()
@@ -88,6 +89,28 @@ function Profile() {
     const { name, value } = e.target;
     setAcctInfo({ ...acctInfo, [name]: value });
   };
+
+  const confirmBtn = () => {
+    setConfirm(previousState => !previousState)
+  }
+
+
+  const deleteUser = () => {
+    const id = localStorage.getItem('UserId');
+
+    fetch(`/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          console.log('User deleted successfully')
+          history.push("/")
+  }
+})
+  }
   
   
   return (
@@ -116,8 +139,17 @@ function Profile() {
       </Table.Body>
     </Table>
     <div className="act-btn">
-    <Button floated="right" icon='edit' color="red">Delete Account</Button>
-    <Button floated='right' icon='edit' onClick={() => setOpen(true)}>Edit Account</Button>
+      <Button onClick={confirmBtn} floated='right' color="red">Delete Account</Button>
+         <Confirm
+           open={confirm}
+           size="mini"
+           content="Are you sure you want to delete account?"
+           onCancel={confirmBtn}
+           onConfirm={deleteUser}
+       />
+    <Button floated='right' onClick={() => setOpen(true)}>
+      Edit Account
+      </Button>
     </div>
     <br />
     <h1 className="cart-header">MY RENTALS</h1>
@@ -133,8 +165,8 @@ function Profile() {
        {rentalData.rentals.map((each, idx) => {
         return <Table.Row key={`key-${idx}-${each.id}`}>
               <Table.Cell>{each.title}</Table.Cell>
-              <Table.Cell>09/14/2023</Table.Cell>
-              <Table.Cell>09/21/2023</Table.Cell>
+              <Table.Cell>12/01/2023</Table.Cell>
+              <Table.Cell>12/08/2023</Table.Cell>
             </Table.Row>
         })}
       </Table.Body>
@@ -216,5 +248,6 @@ function Profile() {
 
   )
 }
+
 
 export default Profile;
