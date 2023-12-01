@@ -10,6 +10,8 @@
 
 ## Introduction
 <img width="967" alt="Flabuster_ERD" src="https://github.com/wesmith3/Flatbuster-Video/assets/124002265/9187e965-d489-44b9-bdd7-5893a28afbc9">
+
+
 Fork and clone this lesson for a template for your full-stack application. Take
 a look at the directory structure before we begin (NOTE: node_modules will be
 generated in a subsequent step):
