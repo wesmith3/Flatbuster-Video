@@ -10,11 +10,11 @@ function Error() {
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, );
 
   return (
     <div className="error-image">
-      <Image key={key} src='././Error.gif' alt='error' />
+      <Image key={key} src='././Error.jpg' alt='error' />
     </div>
   );
 }

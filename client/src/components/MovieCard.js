@@ -85,7 +85,7 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button color={color} onClick={isSoldOut ? null : addToCart}>{btnText}</Button>
+          <Button color='blue' onClick={isSoldOut ? null : addToCart}>Add to Cart</Button>
         </Modal.Actions>
       </Modal>
     </div>

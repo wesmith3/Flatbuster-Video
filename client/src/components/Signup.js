@@ -169,6 +169,7 @@ const Signup = () => {
         </Message>
       </Grid.Column>
     </Grid>
-  );
-};
+    );
+  };
+ }
 export default Signup;
