@@ -10,17 +10,18 @@ function MovieCollection({ id }) {
   const [cartId, setCartId] = useState(0)
   const userId = JSON.parse(localStorage.getItem('UserId'))
   const history = useHistory()
+  const jwt = localStorage.getItem('token')
+  verifyJWT(jwt, id)
   
   useEffect(() => {
-    const jwt = localStorage.getItem('token')
-    verifyJWT(jwt, id)
-    fetch(URL)
+    fetch("/movies")
     .then(res => res.json())
     .then(data => {
       const show = JSON.parse(localStorage.getItem('isLoggedIn'))
       if (show) {
         setMovieList(data)
       } else {
+        localStorage.clear()
         history.push('/')
       }
     })

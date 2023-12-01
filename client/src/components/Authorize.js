@@ -11,7 +11,7 @@ function verifyJWT(jwt, id) {
       })
       .then(res => res.json())
       .then(data => {
-        localStorage.setItem('grantAccess', data['access'])
+        localStorage.setItem('isLoggedIn', data['access'])
       })
       .catch(err => alert(err))
     
