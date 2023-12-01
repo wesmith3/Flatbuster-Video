@@ -7,7 +7,7 @@ function Header() {
       <img className="logo" src="././Logo.png" alt="Logo"></img>
       <Button className='shopping-cart' color='yellow' size='medium' as={Link} to='/my_cart'>
         <Icon name='cart' size='large'/>
-        <Label color='black' floating>3</Label>
+        <Label color='black' circular floating>3</Label>
       </Button>
     </div>
   );

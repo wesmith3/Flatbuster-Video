@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Button, Table } from 'semantic-ui-react'
+import { Button, Table, Modal, Form } from 'semantic-ui-react'
 
 function Profile() {
   const emptyState = {
@@ -11,7 +11,10 @@ function Profile() {
     "created_at": "",
     "rentals": [],
   }
+  
   const [rentalData, setRentalData] = useState(emptyState)
+  const [open, setOpen] = useState(false)
+  
   useEffect(() => {
     const id = localStorage.getItem('UserId')
     fetch(`/user_rentals/${id}`)
@@ -21,6 +24,51 @@ function Profile() {
     })
     .catch(err => alert(err))
   }, [])
+  
+  const myInfo = {
+    "first_name": rentalData.first_name,
+    "last_name": rentalData.last_name,
+    "email": rentalData.email,
+    "phone_number": rentalData.phone_number,
+    "address": rentalData.phone_number,
+  }
+
+  const [acctInfo, setAcctInfo] = useState(myInfo)
+
+  const handleSubmit = () => {
+    const id = localStorage.getItem('UserId');
+    
+    const updatedAcctInfo = {};
+   
+    Object.keys(acctInfo).forEach(field => {
+      // console.log(field, acctInfo[field]==="")
+      if (acctInfo[field] !== myInfo[field] && acctInfo[field].trim() !== "") {
+        updatedAcctInfo[field] = acctInfo[field];
+      }
+    });
+  console.log(updatedAcctInfo)
+    fetch(`/users/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedAcctInfo),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setRentalData(data);
+        setOpen(false);
+      })
+      .catch(err => alert(err));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAcctInfo({ ...acctInfo, [name]: value });
+  };
+  
+  
   return (
     <div>
       <h1 className="cart-header">MY ACCOUNT INFO</h1>
@@ -37,9 +85,7 @@ function Profile() {
       </Table.Header>
       <Table.Body>
         <Table.Row>
-          <Table.Cell>
-            {rentalData.first_name}
-          </Table.Cell>
+          <Table.Cell>{rentalData.first_name}</Table.Cell>
           <Table.Cell>{rentalData.last_name}</Table.Cell>
           <Table.Cell>{rentalData.email}</Table.Cell>
           <Table.Cell>{rentalData.phone_number}</Table.Cell>
@@ -48,7 +94,10 @@ function Profile() {
         </Table.Row>
       </Table.Body>
     </Table>
-    <Button icon='edit'/>
+    <div className="act-btn">
+    <Button floated="right" icon='edit' color="red">Delete Account</Button>
+    <Button floated='right' icon='edit' onClick={() => setOpen(true)}>Edit Account</Button>
+    </div>
     <br />
     <h1 className="cart-header">MY RENTALS</h1>
     <Table celled className="profile-table">
@@ -69,6 +118,79 @@ function Profile() {
         })}
       </Table.Body>
     </Table>
+    <Modal
+        // className="movie-modal"
+        onClose={() => setOpen(false)}
+        dimmed="show"
+        dimmer="blurring"
+        size="small"
+        open={open}
+      >
+      <Modal.Header>
+        My Account Information
+      </Modal.Header>
+      <Modal.Content>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Input 
+            label="First Name" 
+            onChange={handleChange}
+            value={acctInfo.first_name}
+            type="name" 
+            placeholder={rentalData.first_name} 
+            id="first_name" 
+            name="first_name"
+            width={8}
+            />
+            <Form.Input
+            label='Last Name'
+            onChange={handleChange}
+            value={acctInfo.last_name}
+            type="name"
+            placeholder={rentalData.last_name}
+            id="last_name" 
+            name="last_name"
+            width={8}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Input
+            label='Email'
+            onChange={handleChange}
+            value={acctInfo.email}
+            type="email"
+            placeholder={rentalData.email}
+            id="email"
+            name="email"
+            width={8}
+            />
+            <Form.Input
+            label='Phone Number'
+            onChange={handleChange}
+            value={acctInfo.phone_number}
+            type="phone_number"
+            placeholder={rentalData.phone_number}
+            id="phone_number"
+            name="phone_number"
+            width={8}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Input
+            label='Address'
+            onChange={handleChange}
+            value={acctInfo.address}
+            type="address"
+            placeholder={rentalData.address}
+            id="address"
+            name="address"
+            width={16}
+            />
+          </Form.Group>
+          <Button>Update My Info</Button>
+        </Form>
+      </Modal.Content>
+      </Modal>
     </div>
 
   )

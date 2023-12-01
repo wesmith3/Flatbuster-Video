@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, Table } from 'semantic-ui-react';
+import { useHistory } from "react-router-dom";
 
 
 function Cart() {
   const [cartData, setCartData] = useState(null);;
   const cartId = JSON.parse(localStorage.getItem("cartId"));
-  console.log(cartData, cartId)
+  const history = useHistory()
 
   useEffect(() => {
     fetch(`http://localhost:5555/carts/${cartId}`)
@@ -69,8 +70,8 @@ function Cart() {
           if (res.ok) {
             console.log("Rental started successfully");
             setCartData(null);
+
             const movieIds = cartData.cart_movies.map((cart_movie) => cart_movie.id);
-            debugger
 
             movieIds.forEach((movie_id) => {
               fetch(`http://localhost:5555/cart_movies/${movie_id}`, {
@@ -91,6 +92,7 @@ function Cart() {
           }
         })
         .catch((err) => alert(err))
+      history.push("/my_account")
     };
   
 

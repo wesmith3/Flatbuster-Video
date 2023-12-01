@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Card, Image, Modal, Button, Rating } from "semantic-ui-react";
+import { Card, Image, Modal, Button, Rating, Message } from "semantic-ui-react";
 
 
 
 function MovieCard({ id, title, genre, release_year, stock, description, image, rating, cartId }) {
 
   const [open, setOpen] = useState(false);
+  const [added, setAdded] = useState(false);
   const [isSoldOut, setIsSoldOut] = useState(true);
   useEffect(() => {
     stock === 0 ? setIsSoldOut(true) : setIsSoldOut(false)
@@ -30,7 +31,7 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
             }),
           })
             .then((res) => res.json())
-            .then(() => alert("Movie successfully added to cart!"))
+            .then(() => setAdded(true))
             .catch((err) => alert(err));
         }
       })
@@ -86,6 +87,12 @@ function MovieCard({ id, title, genre, release_year, stock, description, image, 
         </Modal.Content>
         <Modal.Actions>
           <Button color='blue' onClick={isSoldOut ? null : addToCart}>Add to Cart</Button>
+          <Message hidden positive>
+                <Message.Header>You are eligible for a reward</Message.Header>
+                  <p>
+                    Go to your <b>special offers</b> page to see now.
+                  </p>
+            </Message>
         </Modal.Actions>
       </Modal>
     </div>
