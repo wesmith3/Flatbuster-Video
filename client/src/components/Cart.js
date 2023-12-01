@@ -54,8 +54,7 @@ function Cart() {
     }
 
     const movieIds = cartData.cart_movies.map((cart_movie) => cart_movie.movie_id);
-    debugger
-    
+
       fetch("http://localhost:5555/rentals", {
         method: "POST",
         headers: {
@@ -70,6 +69,23 @@ function Cart() {
           if (res.ok) {
             console.log("Rental started successfully");
             setCartData(null);
+            const movieIds = cartData.cart_movies.map((cart_movie) => cart_movie.id);
+            debugger
+
+            movieIds.forEach((movie_id) => {
+              fetch(`http://localhost:5555/cart_movies/${movie_id}`, {
+                method: "DELETE",
+              })
+                .then((deleteRes) => {
+                  if (deleteRes.ok) {
+                    console.log("CartItem deleted successfully");
+                  } else {
+                    console.error("Error deleting cart item:", deleteRes.statusText);
+                  }
+                })
+                .catch((deleteErr) => console.error("Error deleting cart item:", deleteErr));
+            }
+          );
           } else {
             console.error("Error starting rental:", res.statusText);
           }

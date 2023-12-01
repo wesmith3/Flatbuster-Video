@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Table } from 'semantic-ui-react'
+import { Button, Table } from 'semantic-ui-react'
 
 function Profile() {
   const emptyState = {
@@ -37,7 +37,9 @@ function Profile() {
       </Table.Header>
       <Table.Body>
         <Table.Row>
-          <Table.Cell>{rentalData.first_name}</Table.Cell>
+          <Table.Cell>
+            {rentalData.first_name}
+          </Table.Cell>
           <Table.Cell>{rentalData.last_name}</Table.Cell>
           <Table.Cell>{rentalData.email}</Table.Cell>
           <Table.Cell>{rentalData.phone_number}</Table.Cell>
@@ -46,6 +48,7 @@ function Profile() {
         </Table.Row>
       </Table.Body>
     </Table>
+    <Button icon='edit'/>
     <br />
     <h1 className="cart-header">MY RENTALS</h1>
     <Table celled className="profile-table">

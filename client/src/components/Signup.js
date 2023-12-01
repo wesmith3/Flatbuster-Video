@@ -171,5 +171,4 @@ const Signup = () => {
     </Grid>
     );
   };
- }
 export default Signup;

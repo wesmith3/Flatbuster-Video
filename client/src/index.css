@@ -98,7 +98,7 @@ body {
   border-collapse: collapse !important;
   /* background-color: #1030ad !important;
   color: white !important; */
-  font-size:x-large !important;
+  /* font-size:x-large !important; */
 }
 
 .custom-cart-table th,
@@ -114,9 +114,9 @@ body {
 }
 
 .custom-cart-table strong {
-  font-size: 1.2em !important;
+  /* font-size: 1.2em !important;
   color: white !important;
-  background-color: #1030ad !important;
+  background-color: #1030ad !important; */
 }
 
 .cart-header {
