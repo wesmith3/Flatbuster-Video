@@ -10,7 +10,7 @@ import {
   Segment,
 } from "semantic-ui-react";
 
-import ErrorSnackBar from "./ErrorSnackBar";
+import ErrorSnackBar from "./FormikErrorSnackbar";
 
 const Signup = () => {
   const emptyState = {
@@ -171,3 +171,4 @@ const Signup = () => {
     </Grid>
   );
 };
+export default Signup;
