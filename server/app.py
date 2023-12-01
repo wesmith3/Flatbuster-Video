@@ -702,7 +702,8 @@ class Users(Resource):
                 password = pw_hash,
                 phone_number = data["phone_number"],
                 address = data["address"],
-                is_employee = data["is_employee"]
+                is_employee = data["is_employee"],
+                created_at = data["created_at"]
             )
             db.session.add(new_user)
             db.session.commit()

@@ -5,9 +5,8 @@ function Header() {
   return (
     <div className='page-header'>
       <img className="logo" src="././Logo.png" alt="Logo"></img>
-      <Button className='shopping-cart' color='yellow' size='medium' as={Link} to='/my_cart'>
-        <Icon name='cart' size='large'/>
-        <Label color='black' circular floating>3</Label>
+      <Button className='shopping-cart' icon='cart'color='yellow' size='large' as={Link} to='/my_cart'>
+        {/* <Icon name='cart' size='large'/> */}
       </Button>
     </div>
   );

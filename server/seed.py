@@ -35,6 +35,7 @@ def create_users():
             phone_number=fake.phone_number(),
             address=fake.address(),
             is_employee=fake.boolean(chance_of_getting_true=20),
+            created_at= fake.date_time()
         )
         c.password = "password"
         users.append(c)
