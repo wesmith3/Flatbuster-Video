@@ -5,9 +5,9 @@
 
 - Discuss the basic directory structure of a full-stack Flask/React application.
 - Carry out the first steps in creating your Phase 4 project.
-
----
 <img width="967" alt="Flabuster_ERD" src="https://github.com/wesmith3/Flatbuster-Video/assets/124002265/9187e965-d489-44b9-bdd7-5893a28afbc9">
+---
+
 ## Introduction
 
 
